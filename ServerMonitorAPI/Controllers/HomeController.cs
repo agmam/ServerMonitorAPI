@@ -10,8 +10,11 @@ namespace ServerMonitorAPI.Controllers
 {
     public class HomeController : Controller
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public ActionResult Index()
         {
+            log.Info("Hello");
             Server s;
             using (var ctx = new ServerMonitorContext())
             {

@@ -10,6 +10,7 @@ namespace DAL.Repositories
 {
     public abstract class AbstractRepository<T> : IRepository<T> where T : Entity
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public T Create(T t)
         {
             try
@@ -22,6 +23,7 @@ namespace DAL.Repositories
             }
             catch (Exception e)
             {
+                log.Error("AbstractRepository Create: " + e.Message);
                 return null;
             }
            
@@ -41,6 +43,7 @@ namespace DAL.Repositories
             }
             catch (Exception e)
             {
+                log.Error("AbstractRepository Delete: " + e.Message);
                 return false;
             }
         }
@@ -60,6 +63,7 @@ namespace DAL.Repositories
             }
             catch (Exception e)
             {
+                log.Error("AbstractRepository Read: " + e.Message);
                 return null;
             }
         }
@@ -79,6 +83,7 @@ namespace DAL.Repositories
             }
             catch (Exception e)
             {
+                log.Error("AbstractRepository ReadAll: " + e.Message);
                 return null;
             }
         }
@@ -98,6 +103,7 @@ namespace DAL.Repositories
             }
             catch (Exception e)
             {
+                log.Error("AbstractRepository ReadAllFromServer: " + e.Message);
                 return null;
             }
         }
@@ -117,6 +123,7 @@ namespace DAL.Repositories
             }
             catch (Exception e)
             {
+                log.Error("AbstractRepository Update: " + e.Message);
                 return null;
             }
         }

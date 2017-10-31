@@ -51,9 +51,10 @@ namespace DAL.Repositories
         {
             try
             {
+                T t;
                 using (var ctx = new ServerMonitorContext())
                 {
-                    var t = ReadEntity(ctx, id);
+                    t = ReadEntity(ctx, id);
                 }
                 return t;
             }
@@ -62,14 +63,17 @@ namespace DAL.Repositories
                 return null;
             }
         }
+
+        internal abstract T ReadEntity(ServerMonitorContext ctx, int id);
 
         public List<T> ReadAll()
         {
             try
             {
+                List<T> t;
                 using (var ctx = new ServerMonitorContext())
                 {
-                    t = CreateEntity(ctx, t);
+                    t = ReadAllEntity(ctx);
                 }
                 return t;
             }
@@ -78,14 +82,17 @@ namespace DAL.Repositories
                 return null;
             }
         }
+
+        internal abstract List<T> ReadAllEntity(ServerMonitorContext ctx);
 
         public List<T> ReadAllFromServer(int serverId)
         {
             try
             {
+                List<T> t;
                 using (var ctx = new ServerMonitorContext())
                 {
-                    t = CreateEntity(ctx, t);
+                    t = ReadAllFromServerEntity(ctx, serverId);
                 }
                 return t;
             }
@@ -95,20 +102,25 @@ namespace DAL.Repositories
             }
         }
 
+        internal abstract List<T> ReadAllFromServerEntity(ServerMonitorContext ctx, int serverId);
+
         public T Update(T t)
         {
             try
             {
+                T entity;
                 using (var ctx = new ServerMonitorContext())
                 {
-                    t = CreateEntity(ctx, t);
+                    entity = UpdateEntity(ctx, t);
                 }
-                return t;
+                return entity;
             }
             catch (Exception e)
             {
                 return null;
             }
         }
+
+        internal abstract T UpdateEntity(ServerMonitorContext ctx, T t);
     }
 }

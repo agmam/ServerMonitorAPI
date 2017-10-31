@@ -38,6 +38,6 @@ namespace DAL.DB
             base.OnModelCreating(modelBuilder);
         }
 
-
+        public System.Data.Entity.DbSet<Entities.Entities.Entity> Entities { get; set; }
     }
 }

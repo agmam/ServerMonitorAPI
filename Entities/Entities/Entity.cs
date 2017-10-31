@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Entities.Entities
 {
-    public class EmailRecipient : Entity
+    public class Entity
     {
-        public string Email { get; set; }
+        public int Id { get; set; }
+        public DateTime Created { get; set; }
     }
 }

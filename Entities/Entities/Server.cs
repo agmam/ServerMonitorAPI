@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Entities.Entities
 {
-    public class Server
+    public class Server : Entity
     {
-        public int Id { get; set; }
-        public DateTime Created { get; set; }
         public string ServerName { get; set; }
         public List<Event> Events { get; set; }
         public List<ServerDetail> ServerDetails { get; set; }

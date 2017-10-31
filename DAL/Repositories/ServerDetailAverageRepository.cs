@@ -1,39 +1,57 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using DAL.DB;
 using DAL.Repositories;
 using Entities.Entities;
 
 namespace DAL
 {
-    internal class ServerDetailAverageRepository : IRepository<ServerDetailAverage>
+    internal class ServerDetailAverageRepository : AbstractRepository<ServerDetailAverage>
     {
-        public ServerDetailAverage Create(ServerDetailAverage t)
+        internal override ServerDetailAverage CreateEntity(ServerMonitorContext ctx, ServerDetailAverage t)
         {
-            throw new System.NotImplementedException();
+            t.Created = DateTime.Now;
+            var entity = ctx.ServerDetailAverages.Add(t);
+            ctx.SaveChanges();
+            return entity;
         }
 
-        public ServerDetailAverage Read(int i)
+        internal override bool DeleteEntity(ServerMonitorContext ctx, int id)
         {
-            throw new System.NotImplementedException();
+            var entity = ctx.ServerDetailAverages.FirstOrDefault(x => x.Id == id);
+            if (entity == null) return false;
+            ctx.ServerDetailAverages.Attach(entity);
+            ctx.ServerDetailAverages.Remove(entity);
+            ctx.SaveChanges();
+            return true;
         }
 
-        public List<ServerDetailAverage> ReadAll()
+        internal override List<ServerDetailAverage> ReadAllEntity(ServerMonitorContext ctx)
         {
-            throw new System.NotImplementedException();
+            return ctx.ServerDetailAverages.ToList();
         }
 
-        public List<ServerDetailAverage> ReadAllFromServer(int serverId)
+        internal override List<ServerDetailAverage> ReadAllFromServerEntity(ServerMonitorContext ctx, int serverId)
         {
-            throw new System.NotImplementedException();
+            return ctx.ServerDetailAverages.Where(x => x.ServerId == serverId).ToList();
+
         }
 
-        public ServerDetailAverage Update(ServerDetailAverage t)
+        internal override ServerDetailAverage ReadEntity(ServerMonitorContext ctx, int id)
         {
-            throw new System.NotImplementedException();
+            return ctx.ServerDetailAverages.FirstOrDefault(x => x.Id == id);
         }
 
-        public bool Delete(int id)
+        internal override ServerDetailAverage UpdateEntity(ServerMonitorContext ctx, ServerDetailAverage t)
         {
-            throw new System.NotImplementedException();
+            var entity = ctx.ServerDetailAverages.AsNoTracking().FirstOrDefault(x => x.Id == t.Id);
+            if (entity == null) return null;
+            ctx.ServerDetailAverages.Attach(t);
+            ctx.Entry(t).State = EntityState.Modified;
+            ctx.SaveChanges();
+            return t;
         }
     }
 }

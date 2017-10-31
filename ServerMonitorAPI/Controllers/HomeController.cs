@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using DAL;
 using DAL.DB;
+using DAL.Repositories;
 using Entities.Entities;
 
 namespace ServerMonitorAPI.Controllers
@@ -14,23 +16,17 @@ namespace ServerMonitorAPI.Controllers
 
         public ActionResult Index()
         {
+            var deleted = new DALFacade().GetServerRepository().ReadAll();
             log.Info("Hello");
-            Server s;
-            using (var ctx = new ServerMonitorContext())
-            {
-               var res = ctx.Servers.Add(new Server { ServerName = "stor server", Created = DateTime.Now });
-                ctx.SaveChanges();
-                
-            }
-         
-            using (var ctx = new ServerMonitorContext())
-            {
-               s = ctx.Servers.FirstOrDefault(x => x.ServerName == "stor server");
-
-            }
-            string ss = "ingen server";
+            Server s = new Server(){
+                ServerName = "lille server"
+            };
+            s = new DALFacade().GetServerRepository().Create(s);
+            var ss = "ingen server";
             if (s != null)
             {
+                s.ServerName = "Updated";
+                s = new DALFacade().GetServerRepository().Update(s);
                 ss = s.ServerName;
             }
             

@@ -54,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\EmailRecipient.cs" />
-    <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Event.cs" />
     <Compile Include="Entities\Server.cs" />
     <Compile Include="Entities\ServerDetail.cs" />

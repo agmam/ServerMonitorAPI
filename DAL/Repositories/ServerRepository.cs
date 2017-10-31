@@ -1,39 +1,56 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using DAL.DB;
 using DAL.Repositories;
 using Entities.Entities;
 
 namespace DAL
 {
-    internal class ServerRepository : IRepository<Server>
+    internal class ServerRepository : AbstractRepository<Server>
     {
-        public Server Create(Server t)
+        internal override Server CreateEntity(ServerMonitorContext ctx, Server t)
         {
-            throw new System.NotImplementedException();
+            t.Created = DateTime.Now;
+            var entity = ctx.Servers.Add(t);
+            ctx.SaveChanges();
+            return entity;
         }
 
-        public Server Read(int i)
+        internal override bool DeleteEntity(ServerMonitorContext ctx, int id)
         {
-            throw new System.NotImplementedException();
+            var entity = ctx.Servers.FirstOrDefault(x => x.Id == id);
+            if (entity == null) return false;
+            ctx.Servers.Attach(entity);
+            ctx.Servers.Remove(entity);
+            ctx.SaveChanges();
+            return true;
         }
 
-        public List<Server> ReadAll()
+        internal override List<Server> ReadAllEntity(ServerMonitorContext ctx)
         {
-            throw new System.NotImplementedException();
+            return ctx.Servers.ToList();
         }
 
-        public List<Server> ReadAllFromServer(int serverId)
+        internal override List<Server> ReadAllFromServerEntity(ServerMonitorContext ctx, int serverId)
         {
-            throw new System.NotImplementedException();
+            return null;
         }
 
-        public Server Update(Server t)
+        internal override Server ReadEntity(ServerMonitorContext ctx, int id)
         {
-            throw new System.NotImplementedException();
+            return ctx.Servers.FirstOrDefault(x => x.Id == id);
         }
 
-        public bool Delete(int id)
+        internal override Server UpdateEntity(ServerMonitorContext ctx, Server t)
         {
-            throw new System.NotImplementedException();
+            var entity = ctx.Servers.AsNoTracking().FirstOrDefault(x => x.Id == t.Id);
+            if (entity == null) return null;
+            ctx.Servers.Attach(t);
+            ctx.Entry(t).State = EntityState.Modified;
+            ctx.SaveChanges();
+            return t;
         }
     }
 }

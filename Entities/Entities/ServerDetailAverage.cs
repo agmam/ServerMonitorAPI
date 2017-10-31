@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Entities.Entities
 {
-    public class ServerDetailAverage : Entity
+    public class ServerDetailAverage 
     {
-            public Server Server { get; set; }
+        public int Id { get; set; }
+        public DateTime Created { get; set; }
+        public Server Server { get; set; }
             public int ServerId { get; set; }
             public decimal CPUUtilization { get; set; }
             public decimal RAMAvailable { get; set; }

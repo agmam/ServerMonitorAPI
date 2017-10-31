@@ -1,39 +1,56 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using DAL.DB;
 using DAL.Repositories;
 using Entities.Entities;
 
 namespace DAL
 {
-    internal class ServerDetailRepository : IRepository<ServerDetail>
+    internal class ServerDetailRepository : AbstractRepository<ServerDetail>
     {
-        public ServerDetail Create(ServerDetail t)
+        internal override ServerDetail CreateEntity(ServerMonitorContext ctx, ServerDetail t)
         {
-            throw new System.NotImplementedException();
+            t.Created = DateTime.Now;
+            var entity = ctx.ServerDetails.Add(t);
+            ctx.SaveChanges();
+            return entity;
         }
 
-        public ServerDetail Read(int i)
+        internal override bool DeleteEntity(ServerMonitorContext ctx, int id)
         {
-            throw new System.NotImplementedException();
+            var entity = ctx.ServerDetails.FirstOrDefault(x => x.Id == id);
+            if (entity == null) return false;
+            ctx.ServerDetails.Attach(entity);
+            ctx.ServerDetails.Remove(entity);
+            ctx.SaveChanges();
+            return true;
         }
 
-        public List<ServerDetail> ReadAll()
+        internal override List<ServerDetail> ReadAllEntity(ServerMonitorContext ctx)
         {
-            throw new System.NotImplementedException();
+            return ctx.ServerDetails.ToList();
         }
 
-        public List<ServerDetail> ReadAllFromServer(int serverId)
+        internal override List<ServerDetail> ReadAllFromServerEntity(ServerMonitorContext ctx, int serverId)
         {
-            throw new System.NotImplementedException();
+            return ctx.ServerDetails.Where(x=>x.ServerId == serverId).ToList();
         }
 
-        public ServerDetail Update(ServerDetail t)
+        internal override ServerDetail ReadEntity(ServerMonitorContext ctx, int id)
         {
-            throw new System.NotImplementedException();
+            return ctx.ServerDetails.FirstOrDefault(x => x.Id == id);
         }
 
-        public bool Delete(int id)
+        internal override ServerDetail UpdateEntity(ServerMonitorContext ctx, ServerDetail t)
         {
-            throw new System.NotImplementedException();
+            var entity = ctx.ServerDetails.AsNoTracking().FirstOrDefault(x => x.Id == t.Id);
+            if (entity == null) return null;
+            ctx.ServerDetails.Attach(t);
+            ctx.Entry(t).State = EntityState.Modified;
+            ctx.SaveChanges();
+            return t;
         }
     }
 }

@@ -1,39 +1,56 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using DAL.DB;
 using DAL.Repositories;
 using Entities.Entities;
 
 namespace DAL
 {
-    internal class EventTypeRepository : IRepository<EventType>
+    internal class EventTypeRepository : AbstractRepository<EventType>
     {
-        public EventType Create(EventType t)
+        internal override EventType CreateEntity(ServerMonitorContext ctx, EventType t)
         {
-            throw new System.NotImplementedException();
+            t.Created = DateTime.Now;
+            var entity = ctx.EventTypes.Add(t);
+            ctx.SaveChanges();
+            return entity;
         }
 
-        public EventType Read(int i)
+        internal override bool DeleteEntity(ServerMonitorContext ctx, int id)
         {
-            throw new System.NotImplementedException();
+            var entity = ctx.EventTypes.FirstOrDefault(x => x.Id == id);
+            if (entity == null) return false;
+            ctx.EventTypes.Attach(entity);
+            ctx.EventTypes.Remove(entity);
+            ctx.SaveChanges();
+            return true;
         }
 
-        public List<EventType> ReadAll()
+        internal override List<EventType> ReadAllEntity(ServerMonitorContext ctx)
         {
-            throw new System.NotImplementedException();
+            return ctx.EventTypes.ToList();
         }
 
-        public List<EventType> ReadAllFromServer(int serverId)
+        internal override List<EventType> ReadAllFromServerEntity(ServerMonitorContext ctx, int serverId)
         {
-            throw new System.NotImplementedException();
+            return null;
         }
 
-        public EventType Update(EventType t)
+        internal override EventType ReadEntity(ServerMonitorContext ctx, int id)
         {
-            throw new System.NotImplementedException();
+            return ctx.EventTypes.FirstOrDefault(x => x.Id == id);
         }
 
-        public bool Delete(int id)
+        internal override EventType UpdateEntity(ServerMonitorContext ctx, EventType t)
         {
-            throw new System.NotImplementedException();
+            var entity = ctx.EventTypes.AsNoTracking().FirstOrDefault(x => x.Id == t.Id);
+            if (entity == null) return null;
+            ctx.EventTypes.Attach(t);
+            ctx.Entry(t).State = EntityState.Modified;
+            ctx.SaveChanges();
+            return t;
         }
     }
 }

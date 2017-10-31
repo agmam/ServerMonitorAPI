@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace Entities.Entities
 {
-    public class EventType : Entity
+    public class EventType
     {
+        public int Id { get; set; }
+        public DateTime Created { get; set; }
         public string Name { get; private set; }
         public bool ShouldNotify { get; set; }
         public decimal PeakValue { get; set; }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public abstract class AbstractRepository<T> : IRepository<T> where T : Entity
+    public abstract class AbstractRepository<T> : IRepository<T>
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         public T Create(T t)
@@ -24,9 +24,9 @@ namespace DAL.Repositories
             catch (Exception e)
             {
                 log.Error("AbstractRepository Create: " + e.Message);
-                return null;
+                return default(T);
             }
-           
+            
         }
         internal abstract T CreateEntity(ServerMonitorContext ctx, T t);
 
@@ -64,7 +64,7 @@ namespace DAL.Repositories
             catch (Exception e)
             {
                 log.Error("AbstractRepository Read: " + e.Message);
-                return null;
+                return default(T);
             }
         }
 
@@ -124,7 +124,7 @@ namespace DAL.Repositories
             catch (Exception e)
             {
                 log.Error("AbstractRepository Update: " + e.Message);
-                return null;
+                return default(T);
             }
         }
 

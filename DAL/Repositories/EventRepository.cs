@@ -1,39 +1,56 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using DAL.DB;
 using DAL.Repositories;
 using Entities.Entities;
 
 namespace DAL
 {
-    internal class EventRepository : IRepository<Event>
+    internal class EventRepository : AbstractRepository<Event>
     {
-        public Event Create(Event t)
+        internal override Event CreateEntity(ServerMonitorContext ctx, Event t)
         {
-            throw new System.NotImplementedException();
+            t.Created = DateTime.Now;
+            var entity = ctx.Events.Add(t);
+            ctx.SaveChanges();
+            return entity;
         }
 
-        public Event Read(int i)
+        internal override bool DeleteEntity(ServerMonitorContext ctx, int id)
         {
-            throw new System.NotImplementedException();
+            var entity = ctx.EventTypes.FirstOrDefault(x => x.Id == id);
+            if (entity == null) return false;
+            ctx.EventTypes.Attach(entity);
+            ctx.EventTypes.Remove(entity);
+            ctx.SaveChanges();
+            return true;
         }
 
-        public List<Event> ReadAll()
+        internal override List<Event> ReadAllEntity(ServerMonitorContext ctx)
         {
-            throw new System.NotImplementedException();
+            return ctx.Events.ToList();
         }
 
-        public List<Event> ReadAllFromServer(int serverId)
+        internal override List<Event> ReadAllFromServerEntity(ServerMonitorContext ctx, int serverId)
         {
-            throw new System.NotImplementedException();
+            return null;
         }
 
-        public Event Update(Event t)
+        internal override Event ReadEntity(ServerMonitorContext ctx, int id)
         {
-            throw new System.NotImplementedException();
+            return ctx.Events.FirstOrDefault(x => x.Id == id);
         }
 
-        public bool Delete(int id)
+        internal override Event UpdateEntity(ServerMonitorContext ctx, Event t)
         {
-            throw new System.NotImplementedException();
+            var entity = ctx.Events.AsNoTracking().FirstOrDefault(x => x.Id == t.Id);
+            if (entity == null) return null;
+            ctx.Events.Attach(t);
+            ctx.Entry(t).State = EntityState.Modified;
+            ctx.SaveChanges();
+            return t;
         }
     }
 }

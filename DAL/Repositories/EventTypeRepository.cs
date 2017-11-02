@@ -10,10 +10,10 @@ namespace DAL
 {
     internal class EventTypeRepository : AbstractRepository<EventType>
     {
-        internal override EventType CreateEntity(ServerMonitorContext ctx, EventType t)
+        internal override EventType CreateEntity(ServerMonitorContext ctx, EventType s)
         {
-            t.Created = DateTime.Now;
-            var entity = ctx.EventTypes.Add(t);
+            s.Created = DateTime.Now;
+            var entity = ctx.EventTypes.Add(s);
             ctx.SaveChanges();
             return entity;
         }

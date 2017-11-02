@@ -10,10 +10,11 @@ namespace DAL
 {
     internal class ServerDetailRepository : AbstractRepository<ServerDetail>
     {
-        internal override ServerDetail CreateEntity(ServerMonitorContext ctx, ServerDetail t)
+        internal override ServerDetail CreateEntity(ServerMonitorContext ctx, ServerDetail s)
         {
-            t.Created = DateTime.Now;
-            var entity = ctx.ServerDetails.Add(t);
+            s.Created = DateTime.Now;
+            ctx.Entry(s.Server).State = EntityState.Unchanged;
+            var entity = ctx.ServerDetails.Add(s);
             ctx.SaveChanges();
             return entity;
         }
@@ -52,5 +53,6 @@ namespace DAL
             ctx.SaveChanges();
             return t;
         }
+
     }
 }

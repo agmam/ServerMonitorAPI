@@ -17,7 +17,7 @@ namespace ServerMonitorAPI.Controllers
 {
     public class EventTypesController : ApiController
     {
-        private IRepository<EventType> db = new DALFacade().GetEventTypeRepository();
+        private IRepository<EventType> db = new DALFacade().GetCRUDEventTypeRepository();
 
         // GET: api/EventTypes
         public List<EventType> GetEventTypes()

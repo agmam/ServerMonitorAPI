@@ -28,7 +28,7 @@ namespace DAL.Repositories
             }
             
         }
-        internal abstract T CreateEntity(ServerMonitorContext ctx, T t);
+        internal abstract T CreateEntity(ServerMonitorContext ctx, T s);
 
         public bool Delete(int id)
         {

@@ -15,7 +15,6 @@ namespace DAL.Repositories
         List<T> ReadAllFromServer(int serverId);
         T Update(T t);
         bool Delete(int id);
-
-
+      
     }
 }

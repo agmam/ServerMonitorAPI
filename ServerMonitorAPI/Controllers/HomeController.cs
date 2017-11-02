@@ -16,21 +16,8 @@ namespace ServerMonitorAPI.Controllers
 
         public ActionResult Index()
         {
-            var deleted = new DALFacade().GetServerRepository().ReadAll();
-            log.Info("Hello");
-            Server s = new Server(){
-                ServerName = "lille server"
-            };
-            s = new DALFacade().GetServerRepository().Create(s);
-            var ss = "ingen server";
-            if (s != null)
-            {
-                s.ServerName = "Updated";
-                s = new DALFacade().GetServerRepository().Update(s);
-                ss = s.ServerName;
-            }
-            
-            ViewBag.Title = ss;
+           
+            ViewBag.Title = "yolo";
 
             return View();
         }

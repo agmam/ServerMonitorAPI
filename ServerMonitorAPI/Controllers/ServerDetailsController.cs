@@ -17,19 +17,19 @@ namespace ServerMonitorAPI.Controllers
 {
     public class ServerDetailsController : ApiController
     {
-        private IRepository<ServerDetail> db = new DALFacade().GetServerDetailRepository();
+        private IRepository<ServerDetail> dbCrud = new DALFacade().GetCRUDServerDetailRepository();
 
         // GET: api/ServerDetails
         public List<ServerDetail> GetServerDetails()
         {
-            return db.ReadAll();
+            return dbCrud.ReadAll();
         }
 
         // GET: api/ServerDetails/5
         [ResponseType(typeof(ServerDetail))]
         public IHttpActionResult GetServerDetail(int id)
         {
-            ServerDetail serverDetail = db.Read(id);
+            ServerDetail serverDetail = dbCrud.Read(id);
             if (serverDetail == null)
             {
                 return NotFound();
@@ -51,12 +51,13 @@ namespace ServerMonitorAPI.Controllers
             {
                 return BadRequest();
             }
-            db.Update(serverDetail);
+            dbCrud.Update(serverDetail);
 
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [Authorize]
         // POST: api/ServerDetails
         [ResponseType(typeof(ServerDetail))]
         public IHttpActionResult PostServerDetail(ServerDetail serverDetail)
@@ -66,27 +67,39 @@ namespace ServerMonitorAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Create(serverDetail);
-            return CreatedAtRoute("DefaultApi", new { id = serverDetail.Id }, serverDetail);
+            Server server = new DALFacade().GetServerRepository().GetServerByName(serverDetail.Server.ServerName);
+            if (server == null)
+            {
+               server = new Server() { ServerName = serverDetail.Server.ServerName };
+                server = new DALFacade().GetCRUDServerRepository().Create(server);
+            }
+             serverDetail.Server = server;
+             serverDetail.ServerId = server.Id;
+             dbCrud.Create(serverDetail);
+
+
+            
+            
+            return StatusCode(HttpStatusCode.OK);
         }
 
         // DELETE: api/ServerDetails/5
         [ResponseType(typeof(ServerDetail))]
         public IHttpActionResult DeleteServerDetail(int id)
         {
-            ServerDetail serverDetail = db.Read(id);
+            ServerDetail serverDetail = dbCrud.Read(id);
             if (serverDetail == null)
             {
                 return NotFound();
             }
 
-            db.Delete(id);
+            dbCrud.Delete(id);
             return Ok(serverDetail);
         }
 
         public List<ServerDetail> GetServerDetails(int id)
         {
-            var a = db.ReadAllFromServer(id);
+            var a = dbCrud.ReadAllFromServer(id);
 
             return a;
         }

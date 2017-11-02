@@ -10,27 +10,36 @@ namespace DAL
 {
     public class DALFacade
     {
-        public IRepository<Server> GetServerRepository()
+        //Server
+        public IRepository<Server> GetCRUDServerRepository()
         {
             return new ServerRepository();
         }
-        public IRepository<ServerDetail> GetServerDetailRepository()
+        public IServerRepository GetServerRepository()
+        {
+            return new ServerRepository();
+        }
+
+        //ServerDetail
+        public IRepository<ServerDetail> GetCRUDServerDetailRepository()
         {
             return new ServerDetailRepository();
         }
-        public IRepository<ServerDetailAverage> ServerDetailAverageRepository()
+
+
+        public IRepository<ServerDetailAverage> GetCRUDServerDetailAverageRepository()
         {
             return new ServerDetailAverageRepository();
         }
-        public IRepository<Event> GetEventRepository()
+        public IRepository<Event> GetCRUDEventRepository()
         {
             return new EventRepository();
         }
-        public IRepository<EventType> GetEventTypeRepository()
+        public IRepository<EventType> GetCRUDEventTypeRepository()
         {
             return new EventTypeRepository();
         }
-        public IRepository<EmailRecipient> GetEmailRecipientRepository()
+        public IRepository<EmailRecipient> GetCRUDEmailRecipientRepository()
         {
             return new EmailRecipientRepository();
         }

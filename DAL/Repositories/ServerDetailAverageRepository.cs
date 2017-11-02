@@ -10,10 +10,10 @@ namespace DAL
 {
     internal class ServerDetailAverageRepository : AbstractRepository<ServerDetailAverage>
     {
-        internal override ServerDetailAverage CreateEntity(ServerMonitorContext ctx, ServerDetailAverage t)
+        internal override ServerDetailAverage CreateEntity(ServerMonitorContext ctx, ServerDetailAverage s)
         {
-            t.Created = DateTime.Now;
-            var entity = ctx.ServerDetailAverages.Add(t);
+            s.Created = DateTime.Now;
+            var entity = ctx.ServerDetailAverages.Add(s);
             ctx.SaveChanges();
             return entity;
         }

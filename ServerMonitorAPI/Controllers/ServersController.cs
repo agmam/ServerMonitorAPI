@@ -17,19 +17,19 @@ namespace ServerMonitorAPI.Controllers
 {
     public class ServersController : ApiController
     {
-        private IRepository<Server> db = new DALFacade().GetServerRepository();
+        private IRepository<Server> dbCrud = new DALFacade().GetCRUDServerRepository();
 
         // GET: api/Servers
         public List<Server> GetServers()
         {
-            return db.ReadAll();
+            return dbCrud.ReadAll();
         }
 
         // GET: api/Servers/5
         [ResponseType(typeof(Server))]
         public IHttpActionResult GetServer(int id)
         {
-            Server server = db.Read(id);
+            Server server = dbCrud.Read(id);
             if (server == null)
             {
                 return NotFound();
@@ -51,7 +51,7 @@ namespace ServerMonitorAPI.Controllers
             {
                 return BadRequest();
             }
-            db.Update(server);
+            dbCrud.Update(server);
 
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -66,7 +66,7 @@ namespace ServerMonitorAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Create(server);
+            dbCrud.Create(server);
             return CreatedAtRoute("DefaultApi", new { id = server.Id }, server);
         }
 
@@ -74,19 +74,19 @@ namespace ServerMonitorAPI.Controllers
         [ResponseType(typeof(Server))]
         public IHttpActionResult DeleteServer(int id)
         {
-            Server server = db.Read(id);
+            Server server = dbCrud.Read(id);
             if (server == null)
             {
                 return NotFound();
             }
 
-            db.Delete(id);
+            dbCrud.Delete(id);
             return Ok(server);
         }
 
         public List<Server> GetServers(int id)
         {
-            var a = db.ReadAllFromServer(id);
+            var a = dbCrud.ReadAllFromServer(id);
 
             return a;
         }

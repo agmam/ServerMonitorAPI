@@ -10,10 +10,10 @@ namespace DAL
 {
     internal class EmailRecipientRepository : AbstractRepository<EmailRecipient>
     {
-        internal override EmailRecipient CreateEntity(ServerMonitorContext ctx, EmailRecipient t)
+        internal override EmailRecipient CreateEntity(ServerMonitorContext ctx, EmailRecipient s)
         {
-            t.Created = DateTime.Now;
-            var entity = ctx.EmailRecipients.Add(t);
+            s.Created = DateTime.Now;
+            var entity = ctx.EmailRecipients.Add(s);
             ctx.SaveChanges();
             return entity;
         }

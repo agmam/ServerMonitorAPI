@@ -8,12 +8,32 @@ using Entities.Entities;
 
 namespace DAL
 {
-    internal class ServerRepository : AbstractRepository<Server>
+    internal class ServerRepository : AbstractRepository<Server>, IServerRepository
     {
-        internal override Server CreateEntity(ServerMonitorContext ctx, Server t)
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        public Server GetServerByName(string name)
         {
-            t.Created = DateTime.Now;
-            var entity = ctx.Servers.Add(t);
+            try
+            {
+                Server s;
+                using (var ctx = new ServerMonitorContext())
+                {
+                    s = ctx.Servers.FirstOrDefault(x => x.ServerName == name);
+                }
+                return s;
+            }
+            catch (Exception e)
+            {
+                log.Error("AbstractRepository Read: " + e.Message);
+                return null;
+            }
+        }
+
+        internal override Server CreateEntity(ServerMonitorContext ctx, Server s)
+        {
+            s.Created = DateTime.Now;
+            var entity = ctx.Servers.Add(s);
             ctx.SaveChanges();
             return entity;
         }

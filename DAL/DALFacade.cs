@@ -15,13 +15,9 @@ namespace DAL
         {
             return new ServerRepository();
         }
-        public IServerRepository GetServerRepository()
-        {
-            return new ServerRepository();
-        }
-
+     
         //ServerDetail
-        public IRepository<ServerDetail> GetCRUDServerDetailRepository()
+        public ICustomRepository<ServerDetail> GetCRUDServerDetailRepository()
         {
             return new ServerDetailRepository();
         }

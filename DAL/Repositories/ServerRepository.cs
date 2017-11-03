@@ -8,7 +8,7 @@ using Entities.Entities;
 
 namespace DAL
 {
-    internal class ServerRepository : AbstractRepository<Server>, IServerRepository
+    internal class ServerRepository : AbstractRepository<Server>
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 

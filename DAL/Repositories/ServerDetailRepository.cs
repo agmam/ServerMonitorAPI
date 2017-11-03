@@ -8,8 +8,10 @@ using Entities.Entities;
 
 namespace DAL
 {
-    internal class ServerDetailRepository : AbstractRepository<ServerDetail>, ICustomRepository<ServerDetail>
+    internal class ServerDetailRepository : AbstractRepository<ServerDetail>, IServerDetailRepository
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         internal override ServerDetail CreateEntity(ServerMonitorContext ctx, ServerDetail s)
         {
             s.Created = DateTime.Now;
@@ -54,9 +56,25 @@ namespace DAL
             return t;
         }
 
-        public ServerDetail GetServerByName(string name)
+
+        public bool DeleteOldServerDetail(int minutes, int serverId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var ctx = new ServerMonitorContext())
+                {
+                    var date = DateTime.Now.AddMinutes(-minutes);
+                    ctx.ServerDetails.RemoveRange(ctx.ServerDetails.Where(x => x.Created < date  && x.ServerId == serverId));
+                    ctx.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Database error - GetLatestServerDetailAverage:", e);
+                throw;
+                
+            }
         }
     }
 }

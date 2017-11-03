@@ -4,15 +4,36 @@ using System.Data.Entity;
 using System.Linq;
 using DAL.DB;
 using DAL.Repositories;
+using DAL.Repositories.IRepositories;
 using Entities.Entities;
 
 namespace DAL
 {
-    internal class ServerDetailAverageRepository : AbstractRepository<ServerDetailAverage>
+    internal class ServerDetailAverageRepository : AbstractRepository<ServerDetailAverage>, IServerDetailAverageRepository
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        public bool GetLatestServerDetailAverage(int interval, int serverId)
+        {
+            try
+            {
+                using (var ctx = new ServerMonitorContext())
+                {
+                    var date = DateTime.Now.AddMinutes(-interval) ;
+                    return ctx.ServerDetailAverages.Count(x => x.Created < DateTime.Now
+                                                                     && x.Created > date && x.ServerId == serverId) > 0;
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Database error - GetLatestServerDetailAverage:", e);
+                throw;
+            }
+        }
+
         internal override ServerDetailAverage CreateEntity(ServerMonitorContext ctx, ServerDetailAverage s)
         {
-            s.Created = DateTime.Now;
+            
             var entity = ctx.ServerDetailAverages.Add(s);
             ctx.SaveChanges();
             return entity;

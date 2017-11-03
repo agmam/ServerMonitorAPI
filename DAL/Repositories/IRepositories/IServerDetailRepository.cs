@@ -7,8 +7,9 @@ using Entities.Entities;
 
 namespace DAL.Repositories
 {
-    public interface ICustomRepository<T>: IRepository<T>
+    public interface IServerDetailRepository : IRepository<ServerDetail>
     {
-        T GetServerByName(string name);
+        bool DeleteOldServerDetail(int minutes, int serverId);
+        
     }
 }

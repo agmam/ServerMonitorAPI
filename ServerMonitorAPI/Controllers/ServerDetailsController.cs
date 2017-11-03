@@ -11,25 +11,30 @@ using System.Web.Http.Description;
 using DAL;
 using DAL.DB;
 using DAL.Repositories;
+using DAL.Repositories.IRepositories;
 using Entities.Entities;
 
 namespace ServerMonitorAPI.Controllers
 {
     public class ServerDetailsController : ApiController
     {
-        private IRepository<ServerDetail> dbCrud = new DALFacade().GetCRUDServerDetailRepository();
+        private IServerDetailRepository serverDetailDB = new DALFacade().GetCRUDServerDetailRepository();
+        private IServerDetailAverageRepository serverDetailAverageDB = new DALFacade().GetCRUDServerDetailAverageRepository();
+
+        private static int INTERVAL = 5;
 
         // GET: api/ServerDetails
         public List<ServerDetail> GetServerDetails()
         {
-            return dbCrud.ReadAll();
+            return serverDetailDB.ReadAll();          
+            
         }
 
         // GET: api/ServerDetails/5
         [ResponseType(typeof(ServerDetail))]
         public IHttpActionResult GetServerDetail(int id)
         {
-            ServerDetail serverDetail = dbCrud.Read(id);
+            ServerDetail serverDetail = serverDetailDB.Read(id);
             if (serverDetail == null)
             {
                 return NotFound();
@@ -51,7 +56,7 @@ namespace ServerMonitorAPI.Controllers
             {
                 return BadRequest();
             }
-            dbCrud.Update(serverDetail);
+            serverDetailDB.Update(serverDetail);
 
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -73,7 +78,32 @@ namespace ServerMonitorAPI.Controllers
                 return BadRequest("no server with id:" + serverDetail.ServerId);
             }
             serverDetail.Server = server;
-            dbCrud.Create(serverDetail);
+            serverDetailDB.Create(serverDetail);
+            
+
+
+            bool isCreated = serverDetailAverageDB.GetLatestServerDetailAverage(INTERVAL, server.Id);
+            if (!isCreated)
+            {
+                serverDetailDB.DeleteOldServerDetail(5, server.Id);
+
+                List<ServerDetail> serverDetails = serverDetailDB.ReadAll() ?? new List<ServerDetail>();
+                if (serverDetails.Count > 0) { 
+                var serverDetailAverage = new ServerDetailAverage();
+                serverDetailAverage.ServerId = server.Id;
+                serverDetailAverage.Created = GetStartOfInterval(DateTime.Now);
+                serverDetailAverage.CPUUtilization = serverDetails.Average(x => x.CPUUtilization);
+                serverDetailAverage.BytesReceived = serverDetails.Sum(x => x.BytesReceived);
+                serverDetailAverage.BytesSent = serverDetails.Sum(x => x.BytesSent);
+                serverDetailAverage.Handles = serverDetails.Average(x => x.Handles);
+                serverDetailAverage.Processes = serverDetails.Average(x => x.Processes);
+                serverDetailAverage.RAMAvailable = serverDetails.Average(x => x.RAMAvailable);
+                serverDetailAverage.RAMTotal = serverDetails.Average(x => x.RAMTotal);
+                serverDetailAverage.UpTime = serverDetails.LastOrDefault().UpTime;
+                    serverDetailAverageDB.Create(serverDetailAverage);
+                }
+            }
+
 
             return StatusCode(HttpStatusCode.OK);
         }
@@ -82,21 +112,33 @@ namespace ServerMonitorAPI.Controllers
         [ResponseType(typeof(ServerDetail))]
         public IHttpActionResult DeleteServerDetail(int id)
         {
-            ServerDetail serverDetail = dbCrud.Read(id);
+            ServerDetail serverDetail = serverDetailDB.Read(id);
             if (serverDetail == null)
             {
                 return NotFound();
             }
 
-            dbCrud.Delete(id);
+            serverDetailDB.Delete(id);
             return Ok(serverDetail);
         }
 
         public List<ServerDetail> GetServerDetails(int id)
         {
-            var a = dbCrud.ReadAllFromServer(id);
+            var a = serverDetailDB.ReadAllFromServer(id);
 
             return a;
+        }
+        /// <summary>
+        /// new class logic 
+        /// </summary>
+        /// <param name="minutes"></param>
+        /// <returns></returns>
+        public DateTime GetStartOfInterval(DateTime now)
+        {
+            var mins = now.Minute / INTERVAL;
+            mins *= INTERVAL;
+            DateTime time = new DateTime(now.Year, now.Month, now.Day, now.Hour, mins, 0);
+            return time;
         }
     }
 }

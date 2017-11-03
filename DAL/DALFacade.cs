@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL.Repositories.IRepositories;
 
 namespace DAL
 {
@@ -17,16 +18,16 @@ namespace DAL
         }
      
         //ServerDetail
-        public ICustomRepository<ServerDetail> GetCRUDServerDetailRepository()
+        public IServerDetailRepository GetCRUDServerDetailRepository()
         {
             return new ServerDetailRepository();
         }
 
-
-        public IRepository<ServerDetailAverage> GetCRUDServerDetailAverageRepository()
+        public IServerDetailAverageRepository GetCRUDServerDetailAverageRepository()
         {
             return new ServerDetailAverageRepository();
         }
+
         public IRepository<Event> GetCRUDEventRepository()
         {
             return new EventRepository();

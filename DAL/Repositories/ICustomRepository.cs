@@ -7,8 +7,8 @@ using Entities.Entities;
 
 namespace DAL.Repositories
 {
-    public interface IServerRepository
+    public interface ICustomRepository<T>: IRepository<T>
     {
-        Server GetServerByName(string name);
+        T GetServerByName(string name);
     }
 }

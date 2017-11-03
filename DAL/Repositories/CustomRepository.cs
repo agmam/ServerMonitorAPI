@@ -8,7 +8,7 @@ using Entities.Entities;
 
 namespace DAL
 {
-    internal class ServerDetailRepository : AbstractRepository<ServerDetail>
+    internal class ServerDetailRepository : AbstractRepository<ServerDetail>, ICustomRepository<ServerDetail>
     {
         internal override ServerDetail CreateEntity(ServerMonitorContext ctx, ServerDetail s)
         {
@@ -54,5 +54,9 @@ namespace DAL
             return t;
         }
 
+        public ServerDetail GetServerByName(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

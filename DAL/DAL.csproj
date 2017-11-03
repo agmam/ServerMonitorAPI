@@ -63,8 +63,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AbstractRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\IServerRepository.cs" />
-    <Compile Include="Repositories\ServerDetailRepository.cs" />
+    <Compile Include="Repositories\ICustomRepository.cs" />
+    <Compile Include="Repositories\CustomRepository.cs" />
     <Compile Include="Repositories\ServerRepository.cs" />
     <Compile Include="Repositories\ServerDetailAverageRepository.cs" />
   </ItemGroup>

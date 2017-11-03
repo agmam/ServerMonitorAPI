@@ -67,19 +67,14 @@ namespace ServerMonitorAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            Server server = new DALFacade().GetServerRepository().GetServerByName(serverDetail.Server.ServerName);
+            Server server = new DALFacade().GetCRUDServerRepository().Read(serverDetail.ServerId);
             if (server == null)
             {
-               server = new Server() { ServerName = serverDetail.Server.ServerName };
-                server = new DALFacade().GetCRUDServerRepository().Create(server);
+                return BadRequest("no server with id:" + serverDetail.ServerId);
             }
-             serverDetail.Server = server;
-             serverDetail.ServerId = server.Id;
-             dbCrud.Create(serverDetail);
+            serverDetail.Server = server;
+            dbCrud.Create(serverDetail);
 
-
-            
-            
             return StatusCode(HttpStatusCode.OK);
         }
 

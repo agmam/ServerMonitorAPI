@@ -31,6 +31,27 @@ namespace DAL
             }
         }
 
+        public List<ServerDetailAverage> GetAllServerDetailAveragesForPeriod(int period, int serverId)
+        {
+                var list = new List<ServerDetailAverage>();
+            try
+            {
+                using (var ctx = new ServerMonitorContext())
+                {
+                    var date = DateTime.Now.AddHours(-period);
+                    list =  ctx.ServerDetailAverages.Where(x => x.Created < DateTime.Now
+                                                                     && x.Created > date && x.ServerId == serverId).ToList();
+                    return list;
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Database error - GetLatestServerDetailAverage:", e);
+                throw;
+            }
+
+        }
+
         internal override ServerDetailAverage CreateEntity(ServerMonitorContext ctx, ServerDetailAverage s)
         {
             

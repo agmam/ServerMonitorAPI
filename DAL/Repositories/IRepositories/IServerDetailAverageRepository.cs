@@ -10,5 +10,6 @@ namespace DAL.Repositories.IRepositories
     public interface IServerDetailAverageRepository : IRepository<ServerDetailAverage>
     {
         bool GetLatestServerDetailAverage(int inteval, int serverId);
+        List<ServerDetailAverage> GetAllServerDetailAveragesForPeriod(int period, int serverId);
     }
 }

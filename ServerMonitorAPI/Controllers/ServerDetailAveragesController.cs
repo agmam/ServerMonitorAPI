@@ -11,18 +11,25 @@ using System.Web.Http.Description;
 using DAL;
 using DAL.DB;
 using DAL.Repositories;
+using DAL.Repositories.IRepositories;
 using Entities.Entities;
 
 namespace ServerMonitorAPI.Controllers
 {
     public class ServerDetailAveragesController : ApiController
     {
-        private IRepository<ServerDetailAverage> db = new DALFacade().GetCRUDServerDetailAverageRepository();
+        private IServerDetailAverageRepository db = new DALFacade().GetCRUDServerDetailAverageRepository();
 
         // GET: api/ServerDetailAverages
         public List<ServerDetailAverage> GetServerDetailAverages()
         {
             return db.ReadAll();
+
+        }
+
+        public List<ServerDetailAverage> GetAllServerDetailAveragesForPeriod(int period, int serverId)
+        {
+            return db.GetAllServerDetailAveragesForPeriod(period, serverId);
         }
 
         // GET: api/ServerDetailAverages/5

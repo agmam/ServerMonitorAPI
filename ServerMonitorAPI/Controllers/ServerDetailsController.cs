@@ -83,8 +83,10 @@ namespace ServerMonitorAPI.Controllers
 
 
             bool isCreated = serverDetailAverageDB.GetLatestServerDetailAverage(INTERVAL, server.Id);
+            
             if (!isCreated)
             {
+                
                 serverDetailDB.DeleteOldServerDetail(5, server.Id);
 
                 List<ServerDetail> serverDetails = serverDetailDB.ReadAll() ?? new List<ServerDetail>();
@@ -98,9 +100,12 @@ namespace ServerMonitorAPI.Controllers
                 serverDetailAverage.Handles = serverDetails.Average(x => x.Handles);
                 serverDetailAverage.Processes = serverDetails.Average(x => x.Processes);
                 serverDetailAverage.RAMAvailable = serverDetails.Average(x => x.RAMAvailable);
-                serverDetailAverage.RAMTotal = serverDetails.Average(x => x.RAMTotal);
+                    serverDetailAverage.RAMTotal = serverDetails.Average(x => x.RAMTotal);
                 serverDetailAverage.UpTime = serverDetails.LastOrDefault().UpTime;
+                    serverDetailAverage.Temperature = serverDetails.Average(x => x.Temperature);
                     serverDetailAverageDB.Create(serverDetailAverage);
+                   
+
                 }
             }
 
@@ -122,12 +127,13 @@ namespace ServerMonitorAPI.Controllers
             return Ok(serverDetail);
         }
 
-        public List<ServerDetail> GetServerDetails(int id)
+        public List<ServerDetail> GetServerDetailsFromServer(int id)
         {
             var a = serverDetailDB.ReadAllFromServer(id);
 
             return a;
         }
+        
         /// <summary>
         /// new class logic 
         /// </summary>

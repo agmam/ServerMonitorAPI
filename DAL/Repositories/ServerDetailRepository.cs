@@ -63,8 +63,10 @@ namespace DAL
             {
                 using (var ctx = new ServerMonitorContext())
                 {
-                    var date = DateTime.Now.AddMinutes(-minutes);
-                    ctx.ServerDetails.RemoveRange(ctx.ServerDetails.Where(x => x.Created < date  && x.ServerId == serverId));
+
+                    var cutoff = DateTime.Now.Subtract(new TimeSpan(0, minutes, 0));
+                    var oldDetails = ctx.ServerDetails.Where(a => a.Created < cutoff);
+                    ctx.ServerDetails.RemoveRange(oldDetails);  
                     ctx.SaveChanges();
                     return true;
                 }

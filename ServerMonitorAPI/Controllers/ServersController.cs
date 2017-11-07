@@ -83,12 +83,5 @@ namespace ServerMonitorAPI.Controllers
             dbCrud.Delete(id);
             return Ok(server);
         }
-
-        public List<Server> GetServers(int id)
-        {
-            var a = dbCrud.ReadAllFromServer(id);
-
-            return a;
-        }
     }
 }

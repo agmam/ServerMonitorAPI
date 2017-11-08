@@ -17,6 +17,7 @@ namespace Entities.Entities
         public decimal RAMTotal { get; set; }
         public decimal UpTime { get; set; }
         public decimal BytesReceived { get; set; }
+        public decimal NetworkUtilization { get; set; }
         public decimal BytesSent { get; set; }
         public decimal Handles { get; set; }
         public decimal Processes { get; set; }

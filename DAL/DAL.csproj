@@ -57,6 +57,15 @@
     <Compile Include="DALFacade.cs" />
     <Compile Include="DB\ServerMonitorContext.cs" />
     <Compile Include="DB\ServerMonitorInitializer.cs" />
+    <Compile Include="Migrations\201711080916014_InitialCreate.cs" />
+    <Compile Include="Migrations\201711080916014_InitialCreate.Designer.cs">
+      <DependentUpon>201711080916014_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711080955037_init.cs" />
+    <Compile Include="Migrations\201711080955037_init.Designer.cs">
+      <DependentUpon>201711080955037_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\EmailRecipientRepository.cs" />
     <Compile Include="Repositories\EventRepository.cs" />
     <Compile Include="Repositories\EventTypeRepository.cs" />
@@ -75,7 +84,14 @@
       <Name>Entities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711080916014_InitialCreate.resx">
+      <DependentUpon>201711080916014_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711080955037_init.resx">
+      <DependentUpon>201711080955037_init.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

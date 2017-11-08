@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using Entities.Entities;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using DAL.Migrations;
+
 namespace DAL.DB
 {
     public class ServerMonitorContext: DbContext
@@ -13,6 +15,7 @@ namespace DAL.DB
        public ServerMonitorContext(): base("ServerMonitorDB")
         {
             Configuration.ProxyCreationEnabled = false;
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ServerMonitorContext, Configuration>());
         }
 
         public DbSet<Server> Servers { get; set; }

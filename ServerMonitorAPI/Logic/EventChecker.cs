@@ -18,7 +18,7 @@ namespace ServerMonitorAPI.Logic
 
         public EventChecker()
         {
-            RamMax = 60;
+            RamMax = 50;
         }
         public Event CheckForEvent(ServerDetailAverage serverDetailAverage)
         {

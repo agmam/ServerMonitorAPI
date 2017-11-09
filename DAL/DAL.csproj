@@ -69,6 +69,14 @@
     <Compile Include="Migrations\201711090903292_eventChanged.Designer.cs">
       <DependentUpon>201711090903292_eventChanged.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711091031324_fixing errors.cs" />
+    <Compile Include="Migrations\201711091031324_fixing errors.Designer.cs">
+      <DependentUpon>201711091031324_fixing errors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711091034477_Email recipient.cs" />
+    <Compile Include="Migrations\201711091034477_Email recipient.Designer.cs">
+      <DependentUpon>201711091034477_Email recipient.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\EmailRecipientRepository.cs" />
     <Compile Include="Repositories\EventRepository.cs" />
@@ -97,6 +105,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711090903292_eventChanged.resx">
       <DependentUpon>201711090903292_eventChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711091031324_fixing errors.resx">
+      <DependentUpon>201711091031324_fixing errors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711091034477_Email recipient.resx">
+      <DependentUpon>201711091034477_Email recipient.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

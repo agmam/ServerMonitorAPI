@@ -109,9 +109,11 @@ namespace ServerMonitorAPI.Controllers
                     
                     EventChecker checker = new EventChecker();
                     var ev = checker.CheckForEvent(serverdetailavarage);
+                   
                     if (ev !=null)
                     {
-                      
+                      EmailSender es = new EmailSender();
+                        es.SendEmail(ev);
                     }
 
 

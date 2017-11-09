@@ -18,7 +18,8 @@ namespace ServerMonitorAPI
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
             config.Filters.Add(new HostAuthenticationFilter(DefaultAuthenticationTypes.ApplicationCookie));
-
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling
+= Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             // Web API routes
             config.MapHttpAttributeRoutes();
 

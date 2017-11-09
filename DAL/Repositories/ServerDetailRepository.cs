@@ -78,7 +78,6 @@ namespace DAL
             catch (Exception e)
             {
                 log.Error("Database error - GetLatestServerDetailAverage:", e);
-                throw;
                 
             }
         }

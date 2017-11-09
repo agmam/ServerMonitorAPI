@@ -25,8 +25,8 @@ namespace ServerMonitorAPI.Controllers
             return EventRepo.ReadAll();
         }
         public List<Event> GetEventsFromServer(int id)
-        {
-            return EventRepo.ReadAllFromServer(id);
+        { var e = EventRepo.ReadAllFromServer(id);
+            return e;
         }
         // GET: api/Events/5
         [ResponseType(typeof(Event))]

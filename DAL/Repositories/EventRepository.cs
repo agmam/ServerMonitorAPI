@@ -37,7 +37,8 @@ namespace DAL
 
         internal override List<Event> ReadAllFromServerEntity(ServerMonitorContext ctx, int serverId)
         {
-            var events = ctx.Events.Where(x => x.ServerId == serverId).ToList();
+            var date = DateTime.Now.AddHours(-10);
+            var events = ctx.Events.Where(x => x.ServerId == serverId && x.Created > date).Include(x=>x.EventType).ToList();
             return events;
         }
 

@@ -27,7 +27,7 @@ namespace ServerMonitorAPI.Logic
                     mail.To.Add(emailRecipient.Email);
                 }
                 //test email
-                mail.To.Add("patrick.laursen@gmail.com");
+                mail.To.Add("vetechnorepley@gmail.com");
                 mail.Subject = "Server warning!";
                 mail.Body = EmailMessage(et);
 

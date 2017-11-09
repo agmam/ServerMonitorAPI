@@ -22,5 +22,6 @@ namespace Entities.Entities
         public decimal Handles { get; set; }
         public decimal Processes { get; set; }
         public decimal Temperature { get; set; }
+        public List<Event> Events { get; set; }
     }
 }

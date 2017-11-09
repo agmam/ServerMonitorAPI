@@ -12,7 +12,9 @@ namespace DAL
     {
         internal override Event CreateEntity(ServerMonitorContext ctx, Event s)
         {
-            s.Created = DateTime.Now;
+            ctx.Entry(s.ServerDetailAverage).State = EntityState.Unchanged;
+            ctx.Entry(s.EventType).State = EntityState.Unchanged;
+            ctx.Entry(s.Server).State = EntityState.Unchanged;
             var entity = ctx.Events.Add(s);
             ctx.SaveChanges();
             return entity;
@@ -35,12 +37,13 @@ namespace DAL
 
         internal override List<Event> ReadAllFromServerEntity(ServerMonitorContext ctx, int serverId)
         {
-            return null;
+            var events = ctx.Events.Where(x => x.ServerId == serverId).ToList();
+            return events;
         }
 
         internal override Event ReadEntity(ServerMonitorContext ctx, int id)
         {
-            return ctx.Events.FirstOrDefault(x => x.Id == id);
+            return ctx.Events.Include(x=>x.ServerDetailAverage).Include(x => x.EventType).Include(x => x.Server).FirstOrDefault(x => x.Id == id);
         }
 
         internal override Event UpdateEntity(ServerMonitorContext ctx, Event t)

@@ -1,3 +1,5 @@
+using Entities.Entities;
+
 namespace DAL.Migrations
 {
     using System;
@@ -19,6 +21,16 @@ namespace DAL.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+            EventType et = new EventType()
+            {
+                ShouldNotify = true,
+                Created = DateTime.Now,
+                PeakValue = 60,
+                RiskEstimate = 1,
+            };
+            et.setName(EventType.Type.LowMemory);
+            context.EventTypes.AddOrUpdate(et);
+            context.SaveChanges();
         }
     }
 }

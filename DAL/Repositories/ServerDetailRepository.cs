@@ -66,9 +66,13 @@ namespace DAL
 
                     var cutoff = DateTime.Now.Subtract(new TimeSpan(0, minutes, 0));
                     var oldDetails = ctx.ServerDetails.Where(a => a.Created < cutoff);
-                    ctx.ServerDetails.RemoveRange(oldDetails);  
-                    ctx.SaveChanges();
-                    return true;
+                    if (oldDetails.ToList().Count > 0)
+                    {
+                        ctx.ServerDetails.RemoveRange(oldDetails);  
+                        ctx.SaveChanges();
+                   
+                    }
+                     return true;
                 }
             }
             catch (Exception e)

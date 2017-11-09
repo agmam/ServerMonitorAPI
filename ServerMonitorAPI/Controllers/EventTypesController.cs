@@ -84,7 +84,7 @@ namespace ServerMonitorAPI.Controllers
             return Ok(eventType);
         }
 
-        public List<EventType> GetEventTypes(int id)
+        public List<EventType> GetEventTypesFromServer(int id)
         {
             var a = db.ReadAllFromServer(id);
 

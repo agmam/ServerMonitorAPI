@@ -14,8 +14,8 @@ namespace Entities.Entities
         public int ServerId { get; set; }
         public EventType EventType { get; set; }
         public int EventTypeId { get; set; }
-        public ServerDetail ServerDetail { get; set; }
-        public int ServerDetailId { get; set; }
+        public ServerDetailAverage ServerDetailAverage { get; set; }
+        public int ServerDetailAverageId { get; set; }
 
 
     }

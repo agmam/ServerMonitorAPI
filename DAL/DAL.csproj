@@ -65,6 +65,10 @@
     <Compile Include="Migrations\201711080955037_init.Designer.cs">
       <DependentUpon>201711080955037_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711090903292_eventChanged.cs" />
+    <Compile Include="Migrations\201711090903292_eventChanged.Designer.cs">
+      <DependentUpon>201711090903292_eventChanged.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\EmailRecipientRepository.cs" />
     <Compile Include="Repositories\EventRepository.cs" />
@@ -90,6 +94,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711080955037_init.resx">
       <DependentUpon>201711080955037_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711090903292_eventChanged.resx">
+      <DependentUpon>201711090903292_eventChanged.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

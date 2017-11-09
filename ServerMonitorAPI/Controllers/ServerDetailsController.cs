@@ -13,6 +13,7 @@ using DAL.DB;
 using DAL.Repositories;
 using DAL.Repositories.IRepositories;
 using Entities.Entities;
+using ServerMonitorAPI.Logic;
 
 namespace ServerMonitorAPI.Controllers
 {
@@ -26,8 +27,8 @@ namespace ServerMonitorAPI.Controllers
         // GET: api/ServerDetails
         public List<ServerDetail> GetServerDetails()
         {
-            return serverDetailDB.ReadAll();          
-            
+            return serverDetailDB.ReadAll();
+
         }
 
         // GET: api/ServerDetails/5
@@ -79,32 +80,40 @@ namespace ServerMonitorAPI.Controllers
             }
             serverDetail.Server = server;
             serverDetailDB.Create(serverDetail);
-            
+
 
 
             bool isCreated = serverDetailAverageDB.GetLatestServerDetailAverage(INTERVAL, server.Id);
-            
+
             if (!isCreated)
             {
-                
+
                 serverDetailDB.DeleteOldServerDetail(5, server.Id);
 
                 List<ServerDetail> serverDetails = serverDetailDB.ReadAll() ?? new List<ServerDetail>();
-                if (serverDetails.Count > 0) { 
-                var serverDetailAverage = new ServerDetailAverage();
-                serverDetailAverage.ServerId = server.Id;
-                serverDetailAverage.Created = GetStartOfInterval(DateTime.Now);
-                serverDetailAverage.CPUUtilization = serverDetails.Average(x => x.CPUUtilization);
-                serverDetailAverage.BytesReceived = serverDetails.Sum(x => x.BytesReceived);
-                serverDetailAverage.BytesSent = serverDetails.Sum(x => x.BytesSent);
-                serverDetailAverage.Handles = serverDetails.Average(x => x.Handles);
-                serverDetailAverage.Processes = serverDetails.Average(x => x.Processes);
-                serverDetailAverage.RAMAvailable = serverDetails.Average(x => x.RAMAvailable);
+                if (serverDetails.Count > 0)
+                {
+                    var serverDetailAverage = new ServerDetailAverage();
+                    serverDetailAverage.ServerId = server.Id;
+                    serverDetailAverage.Created = GetStartOfInterval(DateTime.Now);
+                    serverDetailAverage.CPUUtilization = serverDetails.Average(x => x.CPUUtilization);
+                    serverDetailAverage.BytesReceived = serverDetails.Sum(x => x.BytesReceived);
+                    serverDetailAverage.BytesSent = serverDetails.Sum(x => x.BytesSent);
+                    serverDetailAverage.Handles = serverDetails.Average(x => x.Handles);
+                    serverDetailAverage.Processes = serverDetails.Average(x => x.Processes);
+                    serverDetailAverage.RAMAvailable = serverDetails.Average(x => x.RAMAvailable);
                     serverDetailAverage.RAMTotal = serverDetails.Average(x => x.RAMTotal);
-                serverDetailAverage.UpTime = serverDetails.LastOrDefault().UpTime;
+                    serverDetailAverage.UpTime = serverDetails.LastOrDefault().UpTime;
                     serverDetailAverage.Temperature = serverDetails.Average(x => x.Temperature);
-                    serverDetailAverageDB.Create(serverDetailAverage);
-                   
+                   var serverdetailavarage = serverDetailAverageDB.Create(serverDetailAverage);
+                    
+                    EventChecker checker = new EventChecker();
+                    var ev = checker.CheckForEvent(serverdetailavarage);
+                    if (ev !=null)
+                    {
+                      
+                    }
+
 
                 }
             }
@@ -133,7 +142,7 @@ namespace ServerMonitorAPI.Controllers
 
             return a;
         }
-        
+
         /// <summary>
         /// new class logic 
         /// </summary>

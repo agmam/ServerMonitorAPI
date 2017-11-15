@@ -80,6 +80,7 @@ namespace DAL
                 log.Error("Database error - GetLatestServerDetailAverage:", e);
                 
             }
+            return false;
         }
     }
 }

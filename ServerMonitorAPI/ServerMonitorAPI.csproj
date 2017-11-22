@@ -272,6 +272,11 @@
     </Compile>
     <Compile Include="Logic\EmailSender.cs" />
     <Compile Include="Logic\EventChecker.cs" />
+    <Compile Include="Migrations\201711070936353_InitialCreate.cs" />
+    <Compile Include="Migrations\201711070936353_InitialCreate.Designer.cs">
+      <DependentUpon>201711070936353_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -376,6 +381,11 @@
       <Project>{77878839-76f1-40b1-aecf-0dc0e2f1e140}</Project>
       <Name>Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711070936353_InitialCreate.resx">
+      <DependentUpon>201711070936353_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

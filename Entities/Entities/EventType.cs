@@ -12,7 +12,7 @@ namespace Entities.Entities
         public decimal PeakValue { get; set; }
         public int RiskEstimate { get; set; }
         public List<Event> Events { get; set; }
-        public enum Type { Highcpu = 1, LowMemory = 2, ServerDown = 3, LowDiskSpace = 4 }
+        public enum Type { Highcpu = 1, LowMemory = 2, ServerDown = 3, LowDiskSpace = 4, HighNetworkUtilization = 5, HighCpuTemperature = 6 }
 
         public void setName(Type name)
         {
@@ -30,11 +30,18 @@ namespace Entities.Entities
                 case Type.LowMemory:
                     Name = "LowMemory";
                     break;
+                case Type.HighNetworkUtilization:
+                    Name = "HighNetworkUtilization";
+                    break;
+
+                case Type.HighCpuTemperature:
+                    Name = "HighCpuTemperature";
+                    break;
                 default:
                     Name = "Warning";
                     break;
             }
-        
+            
         }
     }
 }

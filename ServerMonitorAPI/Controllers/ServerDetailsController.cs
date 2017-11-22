@@ -81,15 +81,12 @@ namespace ServerMonitorAPI.Controllers
             serverDetail.Server = server;
             serverDetailDB.Create(serverDetail);
 
-
+            serverDetailDB.DeleteOldServerDetail(INTERVAL, server.Id);
 
             bool isCreated = serverDetailAverageDB.GetLatestServerDetailAverage(INTERVAL, server.Id);
 
             if (!isCreated)
             {
-
-                serverDetailDB.DeleteOldServerDetail(5, server.Id);
-
                 List<ServerDetail> serverDetails = serverDetailDB.ReadAll() ?? new List<ServerDetail>();
                 if (serverDetails.Count > 0)
                 {

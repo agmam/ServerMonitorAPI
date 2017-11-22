@@ -23,6 +23,7 @@ namespace DAL.Migrations
             //  to avoid creating duplicate seed data.
             EventType lowMemoryEventType = new EventType()
             {
+                Id = 1,
                 ShouldNotify = true,
                 Created = DateTime.Now,
                 PeakValue = 60,
@@ -33,6 +34,7 @@ namespace DAL.Migrations
 
             EventType highCpuEventType = new EventType()
             {
+                Id = 2,
                 ShouldNotify = true,
                 Created = DateTime.Now,
                 PeakValue = 70,
@@ -43,6 +45,7 @@ namespace DAL.Migrations
 
             EventType highCpuTemperatureEventType = new EventType()
             {
+                Id = 3,
                 ShouldNotify = true,
                 Created = DateTime.Now,
                 PeakValue = 70,
@@ -53,6 +56,7 @@ namespace DAL.Migrations
 
             EventType networkUtilizationHighEventType = new EventType()
             {
+                Id = 4,
                 ShouldNotify = true,
                 Created = DateTime.Now,
                 PeakValue = 60,
@@ -62,8 +66,9 @@ namespace DAL.Migrations
             context.EventTypes.AddOrUpdate(networkUtilizationHighEventType);
 
             EventType serverDownEventType = new EventType()
-            {
-                ShouldNotify = true,
+            {   
+                Id = 5,
+                ShouldNotify = false,
                 Created = DateTime.Now,
                 PeakValue = 60,
                 RiskEstimate = 1,
@@ -73,6 +78,7 @@ namespace DAL.Migrations
 
             EventType lowDiskSpaceEventType = new EventType()
             {
+                Id = 6,
                 ShouldNotify = true,
                 Created = DateTime.Now,
                 PeakValue = 60,

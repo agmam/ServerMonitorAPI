@@ -28,7 +28,7 @@ namespace DAL.DB
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-           // Database.SetInitializer<ServerMonitorContext>(null);
+           
 
             modelBuilder.Entity<Event>().HasRequired(x => x.EventType).WithMany(x => x.Events);
             modelBuilder.Entity<Event>().HasRequired(x => x.ServerDetailAverage).WithMany(x => x.Events).WillCascadeOnDelete(false);

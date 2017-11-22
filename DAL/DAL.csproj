@@ -56,7 +56,6 @@
   <ItemGroup>
     <Compile Include="DALFacade.cs" />
     <Compile Include="DB\ServerMonitorContext.cs" />
-    <Compile Include="DB\ServerMonitorInitializer.cs" />
     <Compile Include="Migrations\201711080916014_InitialCreate.cs" />
     <Compile Include="Migrations\201711080916014_InitialCreate.Designer.cs">
       <DependentUpon>201711080916014_InitialCreate.cs</DependentUpon>

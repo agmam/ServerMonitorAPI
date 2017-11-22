@@ -7,7 +7,7 @@ namespace Entities.Entities
     {
         public int Id { get; set; }
         public DateTime Created { get; set; }
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public bool ShouldNotify { get; set; }
         public decimal PeakValue { get; set; }
         public int RiskEstimate { get; set; }
@@ -19,23 +19,22 @@ namespace Entities.Entities
             switch (name)
             {
                 case Type.Highcpu:
-                    Name = "Highcpu";
+                    Name = "High Cpu";
                     break;
                 case Type.LowDiskSpace:
-                    Name = "LowDiskSpace";
+                    Name = "Low disk space";
                     break;
                 case Type.ServerDown:
-                    Name = "ServerDown";
+                    Name = "Server down";
                     break;
                 case Type.LowMemory:
-                    Name = "LowMemory";
+                    Name = "Low memory";
                     break;
                 case Type.HighNetworkUtilization:
-                    Name = "HighNetworkUtilization";
+                    Name = "High network utilization";
                     break;
-
                 case Type.HighCpuTemperature:
-                    Name = "HighCpuTemperature";
+                    Name = "High cpu temperature";
                     break;
                 default:
                     Name = "Warning";

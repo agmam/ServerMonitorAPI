@@ -47,6 +47,7 @@ namespace DAL
         {
             var entity = ctx.EventTypes.AsNoTracking().FirstOrDefault(x => x.Id == t.Id);
             if (entity == null) return null;
+            t.Created = entity.Created;
             ctx.EventTypes.Attach(t);
             ctx.Entry(t).State = EntityState.Modified;
             ctx.SaveChanges();

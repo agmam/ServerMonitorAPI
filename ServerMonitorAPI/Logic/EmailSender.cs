@@ -15,6 +15,7 @@ namespace ServerMonitorAPI.Logic
         private readonly IRepository<EmailRecipient> emailRepo = new DALFacade().GetCRUDEmailRecipientRepository();
         public void SendEmail(List<Event> et)
         {
+            return;
             try
             {
                 MailMessage mail = new MailMessage();

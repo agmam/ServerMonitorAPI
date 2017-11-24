@@ -18,25 +18,25 @@ namespace ServerMonitorAPI.Logic
             return;
             try
             {
-                MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                //MailMessage mail = new MailMessage();
+                //SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
-                mail.From = new MailAddress("vetechnorepley@gmail.com");
-                List<EmailRecipient> er = emailRepo.ReadAll();
-                foreach (var emailRecipient in er)
-                {
-                    mail.To.Add(emailRecipient.Email);
-                }
-                //test email
-                mail.To.Add("vetechnorepley@gmail.com");
-                mail.Subject = "Server warning!";
-                mail.Body = EmailMessage(et);
+                //mail.From = new MailAddress("vetechnorepley@gmail.com");
+                //List<EmailRecipient> er = emailRepo.ReadAll();
+                //foreach (var emailRecipient in er)
+                //{
+                //    mail.To.Add(emailRecipient.Email);
+                //}
+                ////test email
+                //mail.To.Add("vetechnorepley@gmail.com");
+                //mail.Subject = "Server warning!";
+                //mail.Body = EmailMessage(et);
 
-                SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("vetechnorepley@gmail.com", "Vetech2017");
-                SmtpServer.EnableSsl = true;
+                //SmtpServer.Port = 587;
+                //SmtpServer.Credentials = new System.Net.NetworkCredential("vetechnorepley@gmail.com", "Vetech2017");
+                //SmtpServer.EnableSsl = true;
 
-                SmtpServer.Send(mail);
+                //SmtpServer.Send(mail);
             }
             catch (Exception ex)
             {

@@ -14,7 +14,7 @@ namespace Entities.Entities
         public List<Event> Events { get; set; }
         public enum Type { Highcpu = 1, LowMemory = 2, ServerDown = 3, LowDiskSpace = 4, HighNetworkUtilization = 5, HighCpuTemperature = 6 }
 
-        public void setName(Type name)
+        public String setName(Type name)
         {
             switch (name)
             {
@@ -40,7 +40,7 @@ namespace Entities.Entities
                     Name = "Warning";
                     break;
             }
-            
+            return Name;
         }
     }
 }

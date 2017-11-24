@@ -20,35 +20,78 @@ namespace ServerMonitorAPI.Logic
         {
             RamMax = 50;
         }
-        public Event CheckForEvent(ServerDetailAverage serverDetailAverage)
+        public List<Event> CheckForEvent(ServerDetailAverage serverDetailAverage)
         {
-            Event e = new Event();
-            if ((((serverDetailAverage.RAMTotal - serverDetailAverage.RAMAvailable) / serverDetailAverage.RAMTotal) * 100) > RamMax)
+            var eventList = new List<Event>();
+            var et = new EventType();
+            var eventTypes = eventTypeRepo.ReadAll();
+            foreach (var eventType in eventTypes)
             {
-                var eventTypes = eventTypeRepo.ReadAll();
-                var et = new EventType();
-                et.setName(EventType.Type.LowMemory);
 
-                foreach (var eventType in eventTypes)
+
+                if (eventType.Name.Equals(et.setName(EventType.Type.LowMemory)))
                 {
-                    if (eventType.Name.Equals(et.Name))
+                    if ((((serverDetailAverage.RAMTotal - serverDetailAverage.RAMAvailable) /
+                          serverDetailAverage.RAMTotal) * 100) > eventType.PeakValue)
                     {
-                        et = eventType;
+                        var @event = MakeEvent(serverDetailAverage, eventType);
+                        eventList.Add(@event);
                         break;
                     }
                 }
-                e.ServerId = serverDetailAverage.ServerId;
-                e.Created = serverDetailAverage.Created;
-                e.EventType = et;
-                e.EventTypeId = et.Id;
-                e.Server = serverRepo.Read(serverDetailAverage.ServerId);
-                e.ServerDetailAverage = serverDetailAverage;
-                e.ServerDetailAverageId = serverDetailAverage.Id;
-                eventRepo.Create(e);
-                return e;
+                if (eventType.Name.Equals(et.setName(EventType.Type.HighCpuTemperature)))
+                {
+                    if (serverDetailAverage.Temperature > eventType.PeakValue)
+                    {
+                        var @event = MakeEvent(serverDetailAverage, eventType);
+                        eventList.Add(@event);
+                        break;
+                    }
+                    
+                }
+                if (eventType.Name.Equals(et.setName(EventType.Type.HighNetworkUtilization)))
+                {
+                    if (serverDetailAverage.NetworkUtilization > eventType.PeakValue)
+                    {
+                        var @event = MakeEvent(serverDetailAverage, eventType);
+                        eventList.Add(@event);
+                        break;
+                    }
+                }
+                if (eventType.Name.Equals(et.setName(EventType.Type.Highcpu)))
+                {
+                    if (serverDetailAverage.CPUUtilization > eventType.PeakValue)
+                    {
+                        var @event = MakeEvent(serverDetailAverage, eventType);
+                        eventList.Add(@event);
+                        break;
+                    }
+                }
+                if (eventType.Name.Equals(et.setName(EventType.Type.LowDiskSpace)))
+                {
+                   
+                }
+                
             }
-            return null;
 
+            return eventList;
+
+        }
+
+
+        private Event MakeEvent(ServerDetailAverage serverDetailAverage, EventType eventType)
+        {
+            var e = new Event();
+            EventType et = eventType;
+            e.ServerId = serverDetailAverage.ServerId;
+            e.Created = serverDetailAverage.Created;
+            e.EventType = et;
+            e.EventTypeId = et.Id;
+            e.Server = serverRepo.Read(serverDetailAverage.ServerId);
+            e.ServerDetailAverage = serverDetailAverage;
+            e.ServerDetailAverageId = serverDetailAverage.Id;
+           Event @event = eventRepo.Create(e);
+            return @event;
         }
     }
 }

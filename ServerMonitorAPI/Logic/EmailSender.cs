@@ -13,7 +13,7 @@ namespace ServerMonitorAPI.Logic
     public class EmailSender
     {
         private readonly IRepository<EmailRecipient> emailRepo = new DALFacade().GetCRUDEmailRecipientRepository();
-        public void SendEmail(Event et)
+        public void SendEmail(List<Event> et)
         {
             try
             {
@@ -43,12 +43,21 @@ namespace ServerMonitorAPI.Logic
             }
         }
 
-        private string EmailMessage(Event et)
+        private string EmailMessage(List<Event> et)
         {
-            string msg = "Warning: " + et.EventType.Name + Environment.NewLine+"On date: " + et.EventType.Created + Environment.NewLine+
-                         "On server with this name: " + et.Server.ServerName;
+            string msg = "No Content";
+            string rlmsg = "";
+            foreach (var @event in et)
+            {
+                rlmsg += "Warning: " + @event.EventType.Name + Environment.NewLine + "On date: " + @event.EventType.Created + Environment.NewLine +
+                         "On server with this name: " + @event.Server.ServerName + "_________________________" + Environment.NewLine + Environment.NewLine;
+            }
+            if (string.IsNullOrEmpty(rlmsg))
+            {
+                msg = rlmsg;
+            }
             return msg;
         }
-         
+
     }
 }

@@ -36,42 +36,38 @@ namespace ServerMonitorAPI.Logic
                     {
                         var @event = MakeEvent(serverDetailAverage, eventType);
                         eventList.Add(@event);
-                        break;
                     }
                 }
-                if (eventType.Name.Equals(et.setName(EventType.Type.HighCpuTemperature)))
+                else if (eventType.Name.Equals(et.setName(EventType.Type.HighCpuTemperature)))
                 {
                     if (serverDetailAverage.Temperature > eventType.PeakValue)
                     {
                         var @event = MakeEvent(serverDetailAverage, eventType);
                         eventList.Add(@event);
-                        break;
                     }
-                    
+
                 }
-                if (eventType.Name.Equals(et.setName(EventType.Type.HighNetworkUtilization)))
+                else if (eventType.Name.Equals(et.setName(EventType.Type.HighNetworkUtilization)))
                 {
                     if (serverDetailAverage.NetworkUtilization > eventType.PeakValue)
                     {
                         var @event = MakeEvent(serverDetailAverage, eventType);
                         eventList.Add(@event);
-                        break;
                     }
                 }
-                if (eventType.Name.Equals(et.setName(EventType.Type.Highcpu)))
+                else if (eventType.Name.Equals(et.setName(EventType.Type.Highcpu)))
                 {
                     if (serverDetailAverage.CPUUtilization > eventType.PeakValue)
                     {
                         var @event = MakeEvent(serverDetailAverage, eventType);
                         eventList.Add(@event);
-                        break;
                     }
                 }
-                if (eventType.Name.Equals(et.setName(EventType.Type.LowDiskSpace)))
+                else if (eventType.Name.Equals(et.setName(EventType.Type.LowDiskSpace)))
                 {
-                   
+
                 }
-                
+
             }
 
             return eventList;
@@ -87,10 +83,8 @@ namespace ServerMonitorAPI.Logic
             e.Created = serverDetailAverage.Created;
             e.EventType = et;
             e.EventTypeId = et.Id;
-            e.Server = serverRepo.Read(serverDetailAverage.ServerId);
-            e.ServerDetailAverage = serverDetailAverage;
             e.ServerDetailAverageId = serverDetailAverage.Id;
-           Event @event = eventRepo.Create(e);
+            Event @event = eventRepo.Create(e);
             return @event;
         }
     }

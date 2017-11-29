@@ -95,6 +95,7 @@ namespace ServerMonitorAPI.Controllers
                     serverDetailAverage.Created = GetStartOfInterval(DateTime.Now);
                     serverDetailAverage.CPUUtilization = serverDetails.Average(x => x.CPUUtilization);
                     serverDetailAverage.BytesReceived = serverDetails.Sum(x => x.BytesReceived);
+                    serverDetailAverage.NetworkUtilization = serverDetails.Average(x => x.NetworkUtilization);
                     serverDetailAverage.BytesSent = serverDetails.Sum(x => x.BytesSent);
                     serverDetailAverage.Handles = serverDetails.Average(x => x.Handles);
                     serverDetailAverage.Processes = serverDetails.Average(x => x.Processes);

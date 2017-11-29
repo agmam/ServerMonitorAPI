@@ -101,6 +101,7 @@ namespace ServerMonitorAPI.Controllers
                     serverDetailAverage.BytesSent = serverDetails.Sum(x => x.BytesSent);
                     serverDetailAverage.Handles = serverDetails.Average(x => x.Handles);
                     serverDetailAverage.Processes = serverDetails.Average(x => x.Processes);
+                    serverDetailAverage.Threads = serverDetails.Average(x => x.Threads);
                     serverDetailAverage.RAMAvailable = serverDetails.Average(x => x.RAMAvailable);
                     serverDetailAverage.RAMTotal = serverDetails.Average(x => x.RAMTotal);
                     serverDetailAverage.UpTime = serverDetails.LastOrDefault().UpTime;

@@ -80,6 +80,10 @@
     <Compile Include="Migrations\201711291101454_harddisk.Designer.cs">
       <DependentUpon>201711291101454_harddisk.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711291144156_Threads, handles.cs" />
+    <Compile Include="Migrations\201711291144156_Threads, handles.Designer.cs">
+      <DependentUpon>201711291144156_Threads, handles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\EmailRecipientRepository.cs" />
     <Compile Include="Repositories\EventRepository.cs" />
@@ -117,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711291101454_harddisk.resx">
       <DependentUpon>201711291101454_harddisk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711291144156_Threads, handles.resx">
+      <DependentUpon>201711291144156_Threads, handles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

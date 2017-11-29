@@ -76,6 +76,10 @@
     <Compile Include="Migrations\201711091034477_Email recipient.Designer.cs">
       <DependentUpon>201711091034477_Email recipient.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711291101454_harddisk.cs" />
+    <Compile Include="Migrations\201711291101454_harddisk.Designer.cs">
+      <DependentUpon>201711291101454_harddisk.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repositories\EmailRecipientRepository.cs" />
     <Compile Include="Repositories\EventRepository.cs" />
@@ -111,14 +115,15 @@
     <EmbeddedResource Include="Migrations\201711091034477_Email recipient.resx">
       <DependentUpon>201711091034477_Email recipient.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711291101454_harddisk.resx">
+      <DependentUpon>201711291101454_harddisk.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Migrations\201711291032083_Added harddisk used\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

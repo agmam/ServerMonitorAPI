@@ -77,7 +77,11 @@ namespace ServerMonitorAPI.Logic
                 }
                 else if (eventType.Name.Equals(et.setName(EventType.Type.LowDiskSpace)))
                 {
-
+                    if ((serverDetailAverage.HarddiskTotalSpace - serverDetailAverage.HarddiskUsedSpace) < eventType.PeakValue)
+                    {
+                        var @event = MakeEvent(serverDetailAverage, eventType);
+                        eventList.Add(@event);
+                    }
                 }
 
             }
@@ -85,6 +89,7 @@ namespace ServerMonitorAPI.Logic
             return eventList;
 
         }
+
 
 
         private Event MakeEvent(ServerDetailAverage serverDetailAverage, EventType eventType)

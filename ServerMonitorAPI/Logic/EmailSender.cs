@@ -52,8 +52,13 @@ namespace ServerMonitorAPI.Logic
             string rlmsg = "";
             foreach (var @event in et)
             {
-                rlmsg += "Warning: " + @event.EventType.Name + Environment.NewLine + "On date: " + @event.EventType.Created + Environment.NewLine +
-                         "On server with this name: " + @event.Server.ServerName + Environment.NewLine + "_________________________" + Environment.NewLine + Environment.NewLine;
+                rlmsg += "Warning: " + @event.EventType.Name + 
+                    Environment.NewLine + "On date: " + @event.EventType.Created + 
+                    Environment.NewLine +
+                    "On server with this name: " + @event.Server.ServerName + 
+                    Environment.NewLine + "_________________________" + 
+                    Environment.NewLine + 
+                    Environment.NewLine;
             }
             if (string.IsNullOrEmpty(rlmsg))
             {

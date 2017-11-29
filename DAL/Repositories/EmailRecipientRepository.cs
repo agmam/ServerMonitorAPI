@@ -20,10 +20,10 @@ namespace DAL
 
         internal override bool DeleteEntity(ServerMonitorContext ctx, int id)
         {
-            var entity = ctx.EventTypes.FirstOrDefault(x => x.Id == id);
+            var entity = ctx.EmailRecipients.FirstOrDefault(x => x.Id == id);
             if (entity == null) return false;
-            ctx.EventTypes.Attach(entity);
-            ctx.EventTypes.Remove(entity);
+            ctx.EmailRecipients.Attach(entity);
+            ctx.EmailRecipients.Remove(entity);
             ctx.SaveChanges();
             return true;
         }
@@ -47,6 +47,7 @@ namespace DAL
         {
             var entity = ctx.EmailRecipients.AsNoTracking().FirstOrDefault(x => x.Id == t.Id);
             if (entity == null) return null;
+            t.Created = entity.Created;
             ctx.EmailRecipients.Attach(t);
             ctx.Entry(t).State = EntityState.Modified;
             ctx.SaveChanges();

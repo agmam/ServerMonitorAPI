@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Runtime.CompilerServices;
 using System.Web;
+using System.Web.Http.Results;
 using DAL;
 using DAL.Repositories;
 using Entities.Entities;
@@ -39,7 +40,8 @@ namespace ServerMonitorAPI.Logic
             }
             catch (Exception ex)
             {
-                throw;
+                var e = ex;
+                return;
             }
         }
 
@@ -50,7 +52,7 @@ namespace ServerMonitorAPI.Logic
             foreach (var @event in et)
             {
                 rlmsg += "Warning: " + @event.EventType.Name + Environment.NewLine + "On date: " + @event.EventType.Created + Environment.NewLine +
-                         "On server with this name: " + @event.Server.ServerName + "_________________________" + Environment.NewLine + Environment.NewLine;
+                         "On server with this name: " + @event.Server.ServerName + Environment.NewLine + "_________________________" + Environment.NewLine + Environment.NewLine;
             }
             if (string.IsNullOrEmpty(rlmsg))
             {

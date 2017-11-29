@@ -45,45 +45,41 @@ namespace ServerMonitorAPI.Logic
                         var @event = MakeEvent(serverDetailAverage, eventType);
                         //We add it to the list
                         eventList.Add(@event);
-                        break;
                     }
                 }
-                if (eventType.Name.Equals(et.setName(EventType.Type.HighCpuTemperature)))
+                else if (eventType.Name.Equals(et.setName(EventType.Type.HighCpuTemperature)))
                 {
                     //If the CPU temperature is greater than the peak value we add it to the list
                     if (serverDetailAverage.Temperature > eventType.PeakValue)
                     {
                         var @event = MakeEvent(serverDetailAverage, eventType);
                         eventList.Add(@event);
-                        break;
                     }
-                    
+
                 }
-                if (eventType.Name.Equals(et.setName(EventType.Type.HighNetworkUtilization)))
+                else if (eventType.Name.Equals(et.setName(EventType.Type.HighNetworkUtilization)))
                 {
                     //The same applies to network as with the cpu temperature
                     if (serverDetailAverage.NetworkUtilization > eventType.PeakValue)
                     {
                         var @event = MakeEvent(serverDetailAverage, eventType);
                         eventList.Add(@event);
-                        break;
                     }
                 }
-                if (eventType.Name.Equals(et.setName(EventType.Type.Highcpu)))
+                else if (eventType.Name.Equals(et.setName(EventType.Type.Highcpu)))
                 {
                     //It applies here too
                     if (serverDetailAverage.CPUUtilization > eventType.PeakValue)
                     {
                         var @event = MakeEvent(serverDetailAverage, eventType);
                         eventList.Add(@event);
-                        break;
                     }
                 }
-                if (eventType.Name.Equals(et.setName(EventType.Type.LowDiskSpace)))
+                else if (eventType.Name.Equals(et.setName(EventType.Type.LowDiskSpace)))
                 {
-                   
+
                 }
-                
+
             }
             //We then return the list
             return eventList;
@@ -100,10 +96,8 @@ namespace ServerMonitorAPI.Logic
             e.Created = serverDetailAverage.Created;
             e.EventType = et;
             e.EventTypeId = et.Id;
-            e.Server = serverRepo.Read(serverDetailAverage.ServerId);
-            e.ServerDetailAverage = serverDetailAverage;
             e.ServerDetailAverageId = serverDetailAverage.Id;
-           Event @event = eventRepo.Create(e);
+            Event @event = eventRepo.Create(e);
             return @event;
         }
     }

@@ -65,7 +65,7 @@ namespace DAL
                 {
 
                     var cutoff = DateTime.Now.Subtract(new TimeSpan(0, minutes, 0));
-                    var oldDetails = ctx.ServerDetails.Where(a => a.Created < cutoff);
+                    var oldDetails = ctx.ServerDetails.Where(a => a.Created < cutoff && a.ServerId == serverId);
                     if (oldDetails.ToList().Count > 0)
                     {
                         ctx.ServerDetails.RemoveRange(oldDetails);  
@@ -77,8 +77,9 @@ namespace DAL
             }
             catch (Exception e)
             {
-                return false;
+
                 log.Error("Database error - GetLatestServerDetailAverage:", e);
+                return false;
                 
             }
             return false;

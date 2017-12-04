@@ -71,7 +71,7 @@ namespace DAL
                 {
                     //Here we evaluate if the data is more than 5 minutes older
                     var cutoff = DateTime.Now.Subtract(new TimeSpan(0, minutes, 0));
-                    var oldDetails = ctx.ServerDetails.Where(a => a.Created < cutoff);
+                    var oldDetails = ctx.ServerDetails.Where(a => a.Created < cutoff && a.ServerId == serverId);
                     if (oldDetails.ToList().Count > 0)
                     {
                         //If so, we delete the entries in the list.
@@ -84,8 +84,9 @@ namespace DAL
             }
             catch (Exception e)
             {
-                return false;
+
                 log.Error("Database error - GetLatestServerDetailAverage:", e);
+                return false;
                 
             }
             return false;

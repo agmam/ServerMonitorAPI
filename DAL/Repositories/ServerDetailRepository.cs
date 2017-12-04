@@ -56,18 +56,25 @@ namespace DAL
             return t;
         }
 
-
+        /// <summary>
+        /// This method is for deleting old data, which is older than 5 minutes
+        /// </summary>
+        /// <param name="minutes"></param>
+        /// <param name="serverId"></param>
+        /// <returns>true if it succeeded</returns>
+        /// The minutes is used to determin the amount of time
         public bool DeleteOldServerDetail(int minutes, int serverId)
         {
             try
             {
                 using (var ctx = new ServerMonitorContext())
                 {
-
+                    //Here we evaluate if the data is more than 5 minutes older
                     var cutoff = DateTime.Now.Subtract(new TimeSpan(0, minutes, 0));
                     var oldDetails = ctx.ServerDetails.Where(a => a.Created < cutoff);
                     if (oldDetails.ToList().Count > 0)
                     {
+                        //If so, we delete the entries in the list.
                         ctx.ServerDetails.RemoveRange(oldDetails);  
                         ctx.SaveChanges();
                    

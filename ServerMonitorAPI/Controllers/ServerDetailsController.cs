@@ -22,6 +22,7 @@ namespace ServerMonitorAPI.Controllers
         private IServerDetailRepository serverDetailDB = new DALFacade().GetCRUDServerDetailRepository();
         private IServerDetailAverageRepository serverDetailAverageDB = new DALFacade().GetCRUDServerDetailAverageRepository();
 
+        //Used for deleting old data
         private static int INTERVAL = 5;
 
         // GET: api/ServerDetails
@@ -63,6 +64,11 @@ namespace ServerMonitorAPI.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        /// <summary>
+        /// Here we post serverDetails with all the properties of a server
+        /// </summary>
+        /// <param name="serverDetail"></param>
+        /// <returns>StatusCode OK to the service</returns>
         [Authorize]
         // POST: api/ServerDetails
         [ResponseType(typeof(ServerDetail))]
@@ -81,6 +87,7 @@ namespace ServerMonitorAPI.Controllers
             serverDetail.Server = server;
             serverDetailDB.Create(serverDetail);
 
+            //Here we specify to the DeleteOldServerDetail that the minutes to use is 5
             serverDetailDB.DeleteOldServerDetail(INTERVAL, server.Id);
 
             bool isCreated = serverDetailAverageDB.GetLatestServerDetailAverage(INTERVAL, server.Id);

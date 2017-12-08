@@ -52,6 +52,26 @@ namespace DAL
 
         }
 
+        public List<ServerDetailAverage> GetServerDetailAverageByRange(DateTime from, DateTime to, int serverId)
+        {
+            var list = new List<ServerDetailAverage>();
+            try
+            {
+                using (var ctx = new ServerMonitorContext())
+                {
+                    list = ctx.ServerDetailAverages.Where(x => x.Created < to
+                                                               && x.Created > from && x.ServerId == serverId).ToList();
+                    return list;
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Database error - GetServerDetailAverageByRange:", e);
+                throw;
+            }
+
+        }
+
         internal override ServerDetailAverage CreateEntity(ServerMonitorContext ctx, ServerDetailAverage s)
         {
             

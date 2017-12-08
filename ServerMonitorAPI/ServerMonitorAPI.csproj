@@ -263,6 +263,7 @@
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\EventTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\ServerDetailAveragesController.cs" />
     <Compile Include="Controllers\ServerDetailsController.cs" />
     <Compile Include="Controllers\ServersController.cs" />
@@ -367,6 +368,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Api\" />
+    <Folder Include="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

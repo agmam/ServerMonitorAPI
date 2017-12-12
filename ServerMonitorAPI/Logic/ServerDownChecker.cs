@@ -53,7 +53,7 @@ namespace ServerMonitorAPI.Logic
                 if (serverDetail != null && serverDetail.Created < serverdown)
                 {
                     //Then we read the last event
-                    var lastEvent = eventRepo.ReadAllFromServer(server.Id).LastOrDefault();
+                    var lastEvent = eventRepo.ReadAllFromServer(server.Id).LastOrDefault(x => x.EventType.Name == et.Name);
                     //If the event type for the server has been created within an hour
                     //the following will not be executed
                     //But if the event is more than an hour old a new event will be triggered

@@ -4,12 +4,15 @@ using System.Data.Entity;
 using System.Linq;
 using DAL.DB;
 using DAL.Repositories;
+using DAL.Repositories.IRepositories;
 using Entities.Entities;
 
 namespace DAL
 {
-    internal class EventRepository : AbstractRepository<Event>
+    internal class EventRepository : AbstractRepository<Event>, IEventRepository
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         internal override Event CreateEntity(ServerMonitorContext ctx, Event s)
         {
            
@@ -58,5 +61,23 @@ namespace DAL
         }
 
 
+        public List<Event> GetAllEventsByRange(DateTime @from, DateTime to, int serverId)
+        {
+            var list = new List<Event>();
+            try
+            {
+                using (var ctx = new ServerMonitorContext())
+                {
+                    list = ctx.Events.Where(x => x.Created < to
+                                                               && x.Created > from && x.ServerId == serverId).Include(x=>x.EventType).Include(x=>x.ServerDetailAverage).ToList();
+                    return list;
+                }
+            }
+            catch (Exception e)
+            {
+                log.Error("Database error - GetAllEventsByRange:", e);
+                throw;
+            }
+        }
     }
 }

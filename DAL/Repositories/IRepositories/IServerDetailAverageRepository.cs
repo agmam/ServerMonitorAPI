@@ -11,5 +11,6 @@ namespace DAL.Repositories.IRepositories
     {
         bool GetLatestServerDetailAverage(int inteval, int serverId);
         List<ServerDetailAverage> GetAllServerDetailAveragesForPeriod(int period, int serverId);
+        List<ServerDetailAverage> GetServerDetailAverageByRange(DateTime from, DateTime to, int serverId);
     }
 }

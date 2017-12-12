@@ -32,6 +32,11 @@ namespace ServerMonitorAPI.Controllers
             return db.GetAllServerDetailAveragesForPeriod(period, serverId);
         }
 
+        public List<ServerDetailAverage> GetServerDetailAverageByRange(DateTime from, DateTime to, int serverId)
+        {
+            return db.GetServerDetailAverageByRange(from, to, serverId);
+        }
+
         // GET: api/ServerDetailAverages/5
         [ResponseType(typeof(ServerDetailAverage))]
         public IHttpActionResult GetServerDetailAverage(int id)

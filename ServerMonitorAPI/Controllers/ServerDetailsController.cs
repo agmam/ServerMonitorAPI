@@ -99,22 +99,24 @@ namespace ServerMonitorAPI.Controllers
                 List<ServerDetail> serverDetails = serverDetailDB.ReadAll() ?? new List<ServerDetail>();
                 if (serverDetails.Count > 0)
                 {
-                    var serverDetailAverage = new ServerDetailAverage();
-                    serverDetailAverage.ServerId = server.Id;
-                    serverDetailAverage.Created = GetStartOfInterval(DateTime.Now);
-                    serverDetailAverage.CPUUtilization = serverDetails.Average(x => x.CPUUtilization);
-                    serverDetailAverage.BytesReceived = serverDetails.Sum(x => x.BytesReceived);
-                    serverDetailAverage.NetworkUtilization = serverDetails.Average(x => x.NetworkUtilization);
-                    serverDetailAverage.HarddiskTotalSpace = serverDetails.Average(x => x.HarddiskTotalSpace);
-                    serverDetailAverage.HarddiskUsedSpace = serverDetails.Average(x => x.HarddiskUsedSpace);
-                    serverDetailAverage.BytesSent = serverDetails.Sum(x => x.BytesSent);
-                    serverDetailAverage.Handles = serverDetails.Average(x => x.Handles);
-                    serverDetailAverage.Processes = serverDetails.Average(x => x.Processes);
-                    serverDetailAverage.Threads = serverDetails.Average(x => x.Threads);
-                    serverDetailAverage.RAMAvailable = serverDetails.Average(x => x.RAMAvailable);
-                    serverDetailAverage.RAMTotal = serverDetails.Average(x => x.RAMTotal);
-                    serverDetailAverage.UpTime = serverDetails.LastOrDefault().UpTime;
-                    serverDetailAverage.Temperature = serverDetails.Average(x => x.Temperature);
+                    var serverDetailAverage = new ServerDetailAverage
+                    {
+                        ServerId = server.Id,
+                        Created = GetStartOfInterval(DateTime.Now),
+                        CPUUtilization = serverDetails.Average(x => x.CPUUtilization),
+                        BytesReceived = serverDetails.Sum(x => x.BytesReceived),
+                        NetworkUtilization = serverDetails.Average(x => x.NetworkUtilization),
+                        HarddiskTotalSpace = serverDetails.Average(x => x.HarddiskTotalSpace),
+                        HarddiskUsedSpace = serverDetails.Average(x => x.HarddiskUsedSpace),
+                        BytesSent = serverDetails.Sum(x => x.BytesSent),
+                        Handles = serverDetails.Average(x => x.Handles),
+                        Processes = serverDetails.Average(x => x.Processes),
+                        Threads = serverDetails.Average(x => x.Threads),
+                        RAMAvailable = serverDetails.Average(x => x.RAMAvailable),
+                        RAMTotal = serverDetails.Average(x => x.RAMTotal),
+                        UpTime = serverDetails.LastOrDefault().UpTime,
+                        Temperature = serverDetails.Average(x => x.Temperature)
+                    };
                     var serverdetailavarage = serverDetailAverageDB.Create(serverDetailAverage);
 
                     EventChecker checker = new EventChecker();

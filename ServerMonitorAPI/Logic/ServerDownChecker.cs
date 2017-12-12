@@ -43,8 +43,9 @@ namespace ServerMonitorAPI.Logic
                     serverDetail = serverInfo[0];
                 }
                 if (serverDetail != null && serverDetail.Created < serverdown)
-                {
-                    var lastEvent = eventRepo.ReadAllFromServer(server.Id).LastOrDefault();
+                {   
+
+                    var lastEvent = eventRepo.ReadAllFromServer(server.Id).LastOrDefault(x=> x.EventType.Name == et.Name);
                     if (lastEvent?.Created  < DateTime.Now.Subtract(new TimeSpan(0,1,0,0)) || lastEvent == null)
                     {
                         var serverDetailAverage =

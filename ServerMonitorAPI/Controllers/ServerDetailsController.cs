@@ -21,6 +21,8 @@ namespace ServerMonitorAPI.Controllers
     {
         private IServerDetailRepository serverDetailDB = new DALFacade().GetCRUDServerDetailRepository();
         private IServerDetailAverageRepository serverDetailAverageDB = new DALFacade().GetCRUDServerDetailAverageRepository();
+        private IRepository<Event> eventRepo = new DALFacade().GetCRUDEventRepository();
+        private IRepository<EventType> eventTypeRepo = new DALFacade().GetCRUDEventTypeRepository();
 
         //Used for deleting old data
         private static int INTERVAL = 5;
@@ -113,16 +115,22 @@ namespace ServerMonitorAPI.Controllers
                     serverDetailAverage.RAMTotal = serverDetails.Average(x => x.RAMTotal);
                     serverDetailAverage.UpTime = serverDetails.LastOrDefault().UpTime;
                     serverDetailAverage.Temperature = serverDetails.Average(x => x.Temperature);
-                   var serverdetailavarage = serverDetailAverageDB.Create(serverDetailAverage);
-                    
+                    var serverdetailavarage = serverDetailAverageDB.Create(serverDetailAverage);
+
                     EventChecker checker = new EventChecker();
-                    var ev = checker.CheckForEvent(serverdetailavarage);
-                   
-                    if (ev !=null)
+                    var ev = checker.CheckForEvent(serverdetailavarage, eventTypeRepo.ReadAll());
+                    List<Event> events = new List<Event>();
+                    foreach (var @event in ev)
                     {
-                      EmailSender es = new EmailSender();
-                        es.SendEmail(ev);
+                      events.Add(eventRepo.Create(@event));  
                     }
+
+                    if (events.Count !=0)
+                    {
+                        EmailSender es = new EmailSender();
+                        es.SendEmail(events);
+                    }
+                   
 
 
                 }

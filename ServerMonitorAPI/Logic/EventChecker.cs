@@ -11,33 +11,30 @@ namespace ServerMonitorAPI.Logic
 {
     public class EventChecker
     {
-        private IRepository<EventType> eventTypeRepo = new DALFacade().GetCRUDEventTypeRepository();
-        private IRepository<Event> eventRepo = new DALFacade().GetCRUDEventRepository();
-        private IRepository<Server> serverRepo = new DALFacade().GetCRUDServerRepository();
-        private int RamMax { get; set; }
 
-        public EventChecker()
-        {
-            RamMax = 50;
-        }
+       
         //This checks for the different event types
-        public List<Event> CheckForEvent(ServerDetailAverage serverDetailAverage)
+        public List<Event> CheckForEvent(ServerDetailAverage serverDetailAverage , List<EventType> eventTypes )
         {
+            if (serverDetailAverage == null || eventTypes == null)
+            {
+                return new List<Event>();
+            }
             //Creates a list for the events
             var eventList = new List<Event>();
 
             var et = new EventType();
 
             //We read the eventtypes
-            var eventTypes = eventTypeRepo.ReadAll();
             foreach (var eventType in eventTypes)
             {
 
                 //If the eventType is low memory
-                if (eventType.Name.Equals(et.setName(EventType.Type.LowMemory)))
+                if (eventType.Name.Equals(et.setName(EventType.Type.LowMemory))) // RAM
                 {
                     //We calculate the RAM used in %
                     //If it is greater than the peak value we add it to the list of events
+                    if(serverDetailAverage.RAMTotal > 0) { 
                     if ((((serverDetailAverage.RAMTotal - serverDetailAverage.RAMAvailable) /
                           serverDetailAverage.RAMTotal) * 100) > eventType.PeakValue)
                     {
@@ -46,8 +43,9 @@ namespace ServerMonitorAPI.Logic
                         //We add it to the list
                         eventList.Add(@event);
                     }
+                    }
                 }
-                else if (eventType.Name.Equals(et.setName(EventType.Type.HighCpuTemperature)))
+                else if (eventType.Name.Equals(et.setName(EventType.Type.HighCpuTemperature))) // TEMP
                 {
                     //If the CPU temperature is greater than the peak value we add it to the list
                     if (serverDetailAverage.Temperature > eventType.PeakValue)
@@ -57,7 +55,7 @@ namespace ServerMonitorAPI.Logic
                     }
 
                 }
-                else if (eventType.Name.Equals(et.setName(EventType.Type.HighNetworkUtilization)))
+                else if (eventType.Name.Equals(et.setName(EventType.Type.HighNetworkUtilization))) // Network
                 {
                     //The same applies to network as with the cpu temperature
                     if (serverDetailAverage.NetworkUtilization > eventType.PeakValue)
@@ -66,7 +64,7 @@ namespace ServerMonitorAPI.Logic
                         eventList.Add(@event);
                     }
                 }
-                else if (eventType.Name.Equals(et.setName(EventType.Type.Highcpu)))
+                else if (eventType.Name.Equals(et.setName(EventType.Type.Highcpu))) // CPU
                 {
                     //It applies here too
                     if (serverDetailAverage.CPUUtilization > eventType.PeakValue)
@@ -75,12 +73,16 @@ namespace ServerMonitorAPI.Logic
                         eventList.Add(@event);
                     }
                 }
-                else if (eventType.Name.Equals(et.setName(EventType.Type.LowDiskSpace)))
+                else if (eventType.Name.Equals(et.setName(EventType.Type.LowDiskSpace)))// DISK
                 {
-                    if ((serverDetailAverage.HarddiskTotalSpace - serverDetailAverage.HarddiskUsedSpace) < eventType.PeakValue)
+                    if (serverDetailAverage.HarddiskTotalSpace > 0)
                     {
-                        var @event = MakeEvent(serverDetailAverage, eventType);
-                        eventList.Add(@event);
+                        if ((serverDetailAverage.HarddiskTotalSpace - serverDetailAverage.HarddiskUsedSpace) <
+                            eventType.PeakValue)
+                        {
+                            var @event = MakeEvent(serverDetailAverage, eventType);
+                            eventList.Add(@event);
+                        }
                     }
                 }
 
@@ -102,8 +104,8 @@ namespace ServerMonitorAPI.Logic
             e.EventType = et;
             e.EventTypeId = et.Id;
             e.ServerDetailAverageId = serverDetailAverage.Id;
-            Event @event = eventRepo.Create(e);
-            return @event;
+             
+            return e;
         }
     }
 }

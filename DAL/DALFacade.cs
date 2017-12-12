@@ -28,7 +28,7 @@ namespace DAL
             return new ServerDetailAverageRepository();
         }
 
-        public IRepository<Event> GetCRUDEventRepository()
+        public IEventRepository GetCRUDEventRepository()
         {
             return new EventRepository();
         }

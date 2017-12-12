@@ -11,19 +11,30 @@ using System.Web.Http.Description;
 using DAL;
 using DAL.DB;
 using DAL.Repositories;
+using DAL.Repositories.IRepositories;
 using Entities.Entities;
 
 namespace ServerMonitorAPI.Controllers
 {
     public class EventsController : ApiController
     {
-        private readonly IRepository<Event> EventRepo = new DALFacade().GetCRUDEventRepository();
+        private readonly IEventRepository EventRepo = new DALFacade().GetCRUDEventRepository();
 
         // GET: api/Events
         public List<Event> GetEvents()
         {
             return EventRepo.ReadAll();
         }
+        public List<Event> GetAllEventsByRange(long from, long to, int serverId)
+        {
+            var fromdate = DateTime.FromBinary(from);
+            var todate = DateTime.FromBinary(to);
+
+
+            var e = EventRepo.GetAllEventsByRange(fromdate, todate, serverId);
+            return e;
+        }
+        
         public List<Event> GetEventsFromServer(int id)
         { var e = EventRepo.ReadAllFromServer(id);
             return e;

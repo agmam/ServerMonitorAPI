@@ -90,6 +90,7 @@
     <Compile Include="Repositories\EventTypeRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AbstractRepository.cs" />
+    <Compile Include="Repositories\IRepositories\IEventRepository.cs" />
     <Compile Include="Repositories\IRepositories\IRepository.cs" />
     <Compile Include="Repositories\IRepositories\IServerDetailAverageRepository.cs" />
     <Compile Include="Repositories\ServerDetailRepository.cs" />

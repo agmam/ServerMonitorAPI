@@ -28,7 +28,7 @@ namespace ServerMonitorAPI.Tests
 
             EventType highCpuEventType = new EventType()
             {
-                Id = 2,
+                Id = 2, 
                 ShouldNotify = true,
                 Created = DateTime.Now,
                 PeakValue = 1,
@@ -169,7 +169,7 @@ namespace ServerMonitorAPI.Tests
                 Temperature = 10,
                 CPUUtilization = 10,
                 RAMTotal = 10,
-                RAMAvailable = 0,
+                RAMAvailable = 0  ,
                 NetworkUtilization = 10,
                 HarddiskTotalSpace = 10,
                 HarddiskUsedSpace = 10

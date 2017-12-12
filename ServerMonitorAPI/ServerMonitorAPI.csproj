@@ -34,7 +34,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\ServerMonitorAPI.XML</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -273,6 +274,7 @@
     </Compile>
     <Compile Include="Logic\EmailSender.cs" />
     <Compile Include="Logic\EventChecker.cs" />
+    <Compile Include="Logic\ServerDownChecker.cs" />
     <Compile Include="Migrations\201711070936353_InitialCreate.cs" />
     <Compile Include="Migrations\201711070936353_InitialCreate.Designer.cs">
       <DependentUpon>201711070936353_InitialCreate.cs</DependentUpon>
@@ -328,6 +330,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="log4net.config" />
+    <None Include="Properties\PublishProfiles\ServermonitorApiBackend - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
@@ -368,6 +371,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Api\" />
+    <Folder Include="Views\ServerDown\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

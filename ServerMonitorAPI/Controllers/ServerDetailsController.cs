@@ -76,6 +76,8 @@ namespace ServerMonitorAPI.Controllers
         [ResponseType(typeof(ServerDetail))]
         public IHttpActionResult PostServerDetail(ServerDetail serverDetail)
         {
+            
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

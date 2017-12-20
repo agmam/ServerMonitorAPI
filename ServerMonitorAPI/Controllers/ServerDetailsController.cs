@@ -17,6 +17,7 @@ using ServerMonitorAPI.Logic;
 
 namespace ServerMonitorAPI.Controllers
 {
+    [Authorize]
     public class ServerDetailsController : ApiController
     {
         private IServerDetailRepository serverDetailDB = new DALFacade().GetCRUDServerDetailRepository();

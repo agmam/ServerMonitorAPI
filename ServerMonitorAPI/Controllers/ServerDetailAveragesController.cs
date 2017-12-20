@@ -16,6 +16,7 @@ using Entities.Entities;
 
 namespace ServerMonitorAPI.Controllers
 {
+    [Authorize]
     public class ServerDetailAveragesController : ApiController
     {
         private IServerDetailAverageRepository db = new DALFacade().GetCRUDServerDetailAverageRepository();

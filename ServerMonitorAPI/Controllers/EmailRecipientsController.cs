@@ -14,21 +14,23 @@ using Entities.Entities;
 
 namespace ServerMonitorAPI.Controllers
 {
+    [Authorize]
     public class EmailRecipientsController : ApiController
     {
-        private IRepository<EmailRecipient> db = new DAL.DALFacade().GetCRUDEmailRecipientRepository();
+        private IRepository<EmailRecipient> emailRepository = 
+            new DAL.DALFacade().GetCRUDEmailRecipientRepository();
 
         // GET: api/EmailRecipients
         public List<EmailRecipient> GetEmailRecipients()
         {
-            return db.ReadAll();
+            return emailRepository.ReadAll();
         }
 
         // GET: api/EmailRecipients/5
         [ResponseType(typeof(EmailRecipient))]
         public IHttpActionResult GetEmailRecipient(int id)
         {
-            EmailRecipient emailRecipient = db.Read(id);
+            EmailRecipient emailRecipient = emailRepository.Read(id);
             if (emailRecipient == null)
             {
                 return NotFound();
@@ -50,7 +52,7 @@ namespace ServerMonitorAPI.Controllers
             {
                 return BadRequest();
             }
-            db.Update(emailRecipient);
+            emailRepository.Update(emailRecipient);
 
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -65,7 +67,7 @@ namespace ServerMonitorAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Create(emailRecipient);
+            emailRepository.Create(emailRecipient);
             return CreatedAtRoute("DefaultApi", new { id = emailRecipient.Id }, emailRecipient);
         }
 
@@ -73,19 +75,19 @@ namespace ServerMonitorAPI.Controllers
         [ResponseType(typeof(EmailRecipient))]
         public IHttpActionResult DeleteEmailRecipient(int id)
         {
-            EmailRecipient emailRecipient = db.Read(id);
+            EmailRecipient emailRecipient = emailRepository.Read(id);
             if (emailRecipient == null)
             {
                 return NotFound();
             }
 
-            db.Delete(id);
+            emailRepository.Delete(id);
             return Ok(emailRecipient);
         }
 
         public List<EmailRecipient> GetEmailRecipients(int id)
         {
-            var a = db.ReadAllFromServer(id);
+            var a = emailRepository.ReadAllFromServer(id);
 
             return a;
         }

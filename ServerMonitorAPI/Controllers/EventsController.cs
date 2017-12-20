@@ -16,6 +16,7 @@ using Entities.Entities;
 
 namespace ServerMonitorAPI.Controllers
 {
+    [Authorize]
     public class EventsController : ApiController
     {
         private readonly IEventRepository EventRepo = new DALFacade().GetCRUDEventRepository();

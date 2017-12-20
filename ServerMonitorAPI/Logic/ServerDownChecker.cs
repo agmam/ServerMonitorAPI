@@ -13,11 +13,11 @@ namespace ServerMonitorAPI.Logic
     public class ServerDownChecker
     {
 
-        private IRepository<ServerDetail> sd = new DALFacade().GetCRUDServerDetailRepository();
-        private IRepository<Server> serverRepo = new DALFacade().GetCRUDServerRepository();
-        private IRepository<EventType> eventTypeRepo = new DALFacade().GetCRUDEventTypeRepository();
-        private IRepository<Event> eventRepo = new DALFacade().GetCRUDEventRepository();
-        private IRepository<ServerDetailAverage> serverDetailAverageRepo = new DALFacade().GetCRUDServerDetailAverageRepository();
+        private IRepository<ServerDetail> sd = new DALFacade().GetServerDetailRepository();
+        private IRepository<Server> serverRepo = new DALFacade().GetServerRepository();
+        private IRepository<EventType> eventTypeRepo = new DALFacade().GetEventTypeRepository();
+        private IRepository<Event> eventRepo = new DALFacade().GetEventRepository();
+        private IRepository<ServerDetailAverage> serverDetailAverageRepo = new DALFacade().GetServerDetailAverageRepository();
         public void ServerDown()
         {
             var servers = serverRepo.ReadAll();

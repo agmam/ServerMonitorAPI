@@ -20,10 +20,10 @@ namespace ServerMonitorAPI.Controllers
     [Authorize]
     public class ServerDetailsController : ApiController
     {
-        private IServerDetailRepository serverDetailDB = new DALFacade().GetCRUDServerDetailRepository();
-        private IServerDetailAverageRepository serverDetailAverageDB = new DALFacade().GetCRUDServerDetailAverageRepository();
-        private IRepository<Event> eventRepo = new DALFacade().GetCRUDEventRepository();
-        private IRepository<EventType> eventTypeRepo = new DALFacade().GetCRUDEventTypeRepository();
+        private IServerDetailRepository serverDetailDB = new DALFacade().GetServerDetailRepository();
+        private IServerDetailAverageRepository serverDetailAverageDB = new DALFacade().GetServerDetailAverageRepository();
+        private IRepository<Event> eventRepo = new DALFacade().GetEventRepository();
+        private IRepository<EventType> eventTypeRepo = new DALFacade().GetEventTypeRepository();
 
         //Used for deleting old data
         private static int INTERVAL = 5;
@@ -84,7 +84,7 @@ namespace ServerMonitorAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            Server server = new DALFacade().GetCRUDServerRepository().Read(serverDetail.ServerId);
+            Server server = new DALFacade().GetServerRepository().Read(serverDetail.ServerId);
             if (server == null)
             {
                 return BadRequest("no server with id:" + serverDetail.ServerId);

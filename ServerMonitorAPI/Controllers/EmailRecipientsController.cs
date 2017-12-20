@@ -18,7 +18,7 @@ namespace ServerMonitorAPI.Controllers
     public class EmailRecipientsController : ApiController
     {
         private IRepository<EmailRecipient> emailRepository = 
-            new DAL.DALFacade().GetCRUDEmailRecipientRepository();
+            new DAL.DALFacade().GetEmailRecipientRepository();
 
         // GET: api/EmailRecipients
         public List<EmailRecipient> GetEmailRecipients()

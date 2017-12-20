@@ -13,7 +13,7 @@ namespace ServerMonitorAPI.Logic
 {
     public class EmailSender
     {
-        private readonly IRepository<EmailRecipient> emailRepo = new DALFacade().GetCRUDEmailRecipientRepository();
+        private readonly IRepository<EmailRecipient> emailRepo = new DALFacade().GetEmailRecipientRepository();
         public void SendEmail(List<Event> et)
         {
             return;

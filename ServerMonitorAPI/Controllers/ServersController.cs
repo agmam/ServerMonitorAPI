@@ -14,11 +14,12 @@ using DAL.Repositories;
 using Entities.Entities;
 
 namespace ServerMonitorAPI.Controllers
+{ 
 
     [Authorize]
 public class ServersController : ApiController
 {
-    private IRepository<Server> dbCrud = new DALFacade().GetCRUDServerRepository();
+    private IRepository<Server> dbCrud = new DALFacade().GetServerRepository();
 
     // GET: api/Servers
     public List<Server> GetServers()

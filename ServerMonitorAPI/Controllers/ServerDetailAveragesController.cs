@@ -19,7 +19,7 @@ namespace ServerMonitorAPI.Controllers
     [Authorize]
     public class ServerDetailAveragesController : ApiController
     {
-        private IServerDetailAverageRepository db = new DALFacade().GetCRUDServerDetailAverageRepository();
+        private IServerDetailAverageRepository db = new DALFacade().GetServerDetailAverageRepository();
 
         // GET: api/ServerDetailAverages
         public List<ServerDetailAverage> GetServerDetailAverages()

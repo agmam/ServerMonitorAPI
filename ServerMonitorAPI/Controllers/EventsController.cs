@@ -19,7 +19,7 @@ namespace ServerMonitorAPI.Controllers
     [Authorize]
     public class EventsController : ApiController
     {
-        private readonly IEventRepository EventRepo = new DALFacade().GetCRUDEventRepository();
+        private readonly IEventRepository EventRepo = new DALFacade().GetEventRepository();
 
         // GET: api/Events
         public List<Event> GetEvents()
@@ -35,11 +35,13 @@ namespace ServerMonitorAPI.Controllers
             var e = EventRepo.GetAllEventsByRange(fromdate, todate, serverId);
             return e;
         }
-        
+
         public List<Event> GetEventsFromServer(int id)
-        { var e = EventRepo.ReadAllFromServer(id);
+        {
+            var e = EventRepo.ReadAllFromServer(id);
             return e;
         }
+
         // GET: api/Events/5
         [ResponseType(typeof(Event))]
         public IHttpActionResult GetEvent(int id)
@@ -67,7 +69,7 @@ namespace ServerMonitorAPI.Controllers
                 return BadRequest();
             }
 
-           
+
             try
             {
                 EventRepo.Update(@event);
@@ -116,7 +118,7 @@ namespace ServerMonitorAPI.Controllers
             return Ok(@event);
         }
 
-   
+
 
         private bool EventExists(int id)
         {

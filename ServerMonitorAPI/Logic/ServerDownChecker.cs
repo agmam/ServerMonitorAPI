@@ -77,11 +77,10 @@ namespace ServerMonitorAPI.Logic
                             //Lastly we create the event 
                             //And sends an email
                             eventRepo.Create(@event);
-                            var email = new EmailSender();
-                            email.SendEmail(new List<Event>()
-                            {
-                                @event
-                            });
+                            //email.SendEmail(new List<Event>()
+                            //{
+                            //    @event
+                            //});
                         }
                     }
 

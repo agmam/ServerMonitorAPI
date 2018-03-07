@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using DAL;
-using DAL.DB;
 using DAL.Repositories;
 using DAL.Repositories.IRepositories;
 using Entities.Entities;
@@ -77,7 +75,7 @@ namespace ServerMonitorAPI.Controllers
         [ResponseType(typeof(ServerDetail))]
         public IHttpActionResult PostServerDetail(ServerDetail serverDetail)
         {
-            
+
 
             if (!ModelState.IsValid)
             {
@@ -122,22 +120,18 @@ namespace ServerMonitorAPI.Controllers
                     };
                     var serverdetailavarage = serverDetailAverageDB.Create(serverDetailAverage);
 
+
+
+
+
                     EventChecker checker = new EventChecker();
                     var ev = checker.CheckForEvent(serverdetailavarage, eventTypeRepo.ReadAll());
                     List<Event> events = new List<Event>();
                     foreach (var @event in ev)
                     {
-                      events.Add(eventRepo.Create(@event));  
+                        events.Add(eventRepo.Create(@event));
                     }
-
-                    if (events.Count !=0)
-                    {
-                        EmailSender es = new EmailSender();
-                        es.SendEmail(events);
-                    }
-                   
-
-
+                    
                 }
             }
 

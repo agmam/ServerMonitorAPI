@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerMonitorAPI", "ServerMonitorAPI\ServerMonitorAPI.csproj", "{8BEBFA92-3654-465A-93C0-106FEAE22FE5}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{77878839-76F1-40B1-AECF-0DC0E2F1E140}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{A5147354-0ABD-4EFA-8BB6-6081F5572C36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailServicen", "EmailServicen\EmailServicen.csproj", "{4B7313ED-BDBC-4D45-80A8-C767D4A8D46C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +35,15 @@ Global
 		{A5147354-0ABD-4EFA-8BB6-6081F5572C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5147354-0ABD-4EFA-8BB6-6081F5572C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5147354-0ABD-4EFA-8BB6-6081F5572C36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B7313ED-BDBC-4D45-80A8-C767D4A8D46C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B7313ED-BDBC-4D45-80A8-C767D4A8D46C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B7313ED-BDBC-4D45-80A8-C767D4A8D46C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B7313ED-BDBC-4D45-80A8-C767D4A8D46C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9EF05D8B-B929-4C06-B9D1-480A8CC65EEA}
 	EndGlobalSection
 EndGlobal
